@@ -26,7 +26,7 @@ function handleData(data) {
     console.log('handle data:', data)
 }
 
-getData()
+// getData()
 
 root.render(
     <Main />
