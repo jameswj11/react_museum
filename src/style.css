@@ -1,3 +1,10 @@
 h1 {
     color: red
 }
+
+.image-card {
+    display: inline;
+    img {
+        max-width: 250px;
+    }
+}

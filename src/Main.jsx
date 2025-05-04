@@ -1,11 +1,46 @@
-import './style.css';
-import Search from './Search.jsx';
+import {useState, useEffect} from 'react';
+import "./style.css";
+import Search from "../components/Search.jsx";
+import Paintings from "../components/Collection.jsx";
 
-const Main = ()=> (
+const Main = () => {
+    const [paintings, setPaintings] = useState([]);
+    const [favorites, setFavorites] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+
+    const searchPaintings = async(searchValue) => {
+      // return;
+      const url= `https://api.harvardartmuseums.org/object?apikey=df765b0b-5b18-4c03-ab7a-5538cf101bb3&q=${searchValue}&classification=26&sort=random`;
+      const response = await fetch(url);
+      const responseJson = await response.json()
+      
+      if (responseJson.records) {
+        const parsedRecords = [];
+        
+        responseJson.records.forEach(element => {
+          if (element.images.length > 0) {
+            if (element.images[0].idsid) {
+              parsedRecords.push(element)
+            }
+          }
+        }); 
+
+        setPaintings(parsedRecords)
+      }
+      console.log('response json:', responseJson)
+    }
+
+    useEffect(()=>{
+      searchPaintings(searchValue)
+    }, [searchValue])
+
+  return (
     <div>
-        <h1>Explore the Harvard Museums</h1>
-        <Search />
+      <h1>Explore the Harvard Museums</h1>
+      <Search searchValue={searchValue} setSearchValue={setSearchValue}/>
+      <Paintings paintings={paintings} />
     </div>
-)
+  );
+};
 
-export default Main;    
+export default Main;
