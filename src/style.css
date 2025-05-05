@@ -5,6 +5,6 @@ h1 {
 .image-card {
     display: inline;
     img {
-        max-width: 250px;
+        /* max-width: 250px; */
     }
 }

@@ -10,7 +10,7 @@ const Main = () => {
 
     const searchPaintings = async(searchValue) => {
       // return;
-      const url= `https://api.harvardartmuseums.org/object?apikey=df765b0b-5b18-4c03-ab7a-5538cf101bb3&q=${searchValue}&classification=26&sort=random`;
+      const url= `https://api.harvardartmuseums.org/object?apikey=df765b0b-5b18-4c03-ab7a-5538cf101bb3&q=${searchValue}&classification=26&sort=random&size=24`;
       const response = await fetch(url);
       const responseJson = await response.json()
       
@@ -18,8 +18,9 @@ const Main = () => {
         const parsedRecords = [];
         
         responseJson.records.forEach(element => {
-          if (element.images.length > 0) {
-            if (element.images[0].idsid) {
+          console.log(element.primaryimageurl)
+          if (element.primaryimageurl) {
+            if (element.primaryimageurl.length) {
               parsedRecords.push(element)
             }
           }
