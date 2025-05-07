@@ -7,6 +7,8 @@ const NextPageNav = (props) => {
     let nextPage;
     let lastPage;
 
+    console.log('current page', props.currentPage)
+
     if (numPages <= maxPages) {
         pagesToDisplay = new Array(numPages).fill('');
     } else {
@@ -23,7 +25,17 @@ const NextPageNav = (props) => {
             }
 
             {pagesToDisplay.map((page, index) => (
-                <button key={index}>{(pagesToDisplay.length >= numPages) ? index + 1 : index  + currentPage}</button>
+                <button onClick={(event) => {
+                    console.log('index:', index)
+                    if (props.currentPage != event.target.innerHTML) {
+                        currentPage = event.target.innerHTML;
+                        props.setCurrentPage(currentPage)
+                    }
+                }} key={index}>
+                    {
+                        (currentPage <= 3) ? (index + 1)  : index + (currentPage - 2)
+                    }
+                </button>
             ))}
 
             {
