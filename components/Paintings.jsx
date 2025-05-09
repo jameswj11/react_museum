@@ -16,9 +16,11 @@ const Paintings = (props) => {
     paintings.push(
     <div className='image-card'key={painting.id}>
       {imgObj}
+      <div className="image-info">
       <h4>{painting.title}</h4>
       {painting.people ? <p>{painting.people[0].name} </p> : <br/>}
       {painting.dated ? <p>{painting.dated}</p> : <br />}
+      </div>
     </div>)
   })
 

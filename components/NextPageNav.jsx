@@ -10,8 +10,6 @@ const NextPageNav = (props) => {
         pagesToDisplay = new Array(maxPages).fill('');
     }
 
-    console.log('pages to display:', pagesToDisplay)
-
     return (
         <div>
             {
@@ -24,7 +22,6 @@ const NextPageNav = (props) => {
             {pagesToDisplay.map((page, index) => (
                 <button onClick={(event) => {
                     document.body.scrollTop = document.documentElement.scrollTop = 0;
-                    console.log('index:', index)
                     if (props.currentPage != event.target.innerHTML) {
                         currentPage = event.target.innerHTML;
                         props.setCurrentPage(currentPage)
@@ -39,8 +36,7 @@ const NextPageNav = (props) => {
             {
                 currentPage < numPages ? 
                 <button onClick={(event) => {
-                    // document.body.scrollTop = document.documentElement.scrollTop = 0;
-                    console.log('current page:', currentPage)
+                    document.body.scrollTop = document.documentElement.scrollTop = 0;
                     currentPage++;
                     props.setCurrentPage(currentPage)
                 }}>Next Page</button>
