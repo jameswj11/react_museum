@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
+
 const Search = (props) => {
-  console.log('props from search component:', props);
+  
   return (
     <div>
       <label htmlFor="search">Search the Collection:</label>
@@ -9,7 +11,10 @@ const Search = (props) => {
         name="q"
         value={props.value}
         placeholder="Type to search..."
-        onChange={(event) => props.setSearchValue(event.target.value)}
+        onChange={(event) => {
+          props.setSearchValue(event.target.value);
+          props.setCurrentPage(1);
+        }}
       />
     </div>
   );

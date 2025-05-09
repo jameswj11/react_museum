@@ -2,10 +2,11 @@ const Paintings = (props) => {
   console.log('props.paintings:', props.paintings);
   let paintings = [];
 
+  let sorted = props.paintings.sort()
   props.paintings.forEach((painting) => {
     let url = '';
     let imgObj;
-    
+
     if (painting.primaryimageurl) {
       imgObj = <img src={painting.primaryimageurl + "?width=350"} className="img-fluid" alt='painting'></img>;
     } else {
@@ -20,6 +21,8 @@ const Paintings = (props) => {
       {painting.dated ? <p>{painting.dated}</p> : <br />}
     </div>)
   })
+
+  console.log('paintings:', paintings)
 
   return (   
     <div className="image-grid">
