@@ -1,5 +1,6 @@
 const Paintings = (props) => {
-  console.log('props.paintings:', props.paintings);
+  console.log('paintings mounted')
+  // console.log('props.paintings:', props.paintings);
   let paintings = [];
 
   let sorted = props.paintings.sort()
@@ -23,8 +24,6 @@ const Paintings = (props) => {
       </div>
     </div>)
   })
-
-  console.log('paintings:', paintings)
 
   return (   
     <div className="image-grid">

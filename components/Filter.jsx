@@ -1,34 +1,21 @@
 const Filter = (props) => {
-  let labelOptions = { century: {}, division: {}, culture: {}, medium: {} };
-
-  props.paintings.forEach((painting) => {
-    Object.keys(labelOptions).forEach((filterType) => {
-      if (
-        Object.keys(labelOptions[filterType]).includes(painting[filterType])
-      ) {
-        labelOptions[filterType][painting[filterType]]++;
-      } else {
-        if (painting[filterType] == null || painting[filterType] == undefined) {
-          labelOptions[filterType] = { "N/A": 1 };
-        } else {
-          labelOptions[filterType][painting[filterType]] = 1;
-        }
-      }
-    });
-  });
-
+    console.log('filter mounted');
   return (
     <div>
-      {Object.keys(labelOptions).map((key, index) => (
-        <select key={index} onChange={(event) => {
-            props.setFilterValue(event.target.value)
+      {Object.keys(props.startFilters).map((filter, index) => (
+        <select key={index} name={filter} onChange={(event) => {
+            props.setFilterValue({k: event.target.name, v: event.target.value})
         }}>
           <option key={"default"} value="">
-            {key}
+            {(filter == "classification") ? "object type" : filter}
           </option>
-          {Object.keys(labelOptions[key]).map((value, index) => (
-            <option key={index} value={value}>
-              {value + " (" + labelOptions[key][value] + ")"}
+          {Object.keys(props.startFilters[filter]).map((selectOption, index) => (
+            <option key={index} value={props.startFilters[filter][selectOption].name}>
+              {
+                props.startFilters[filter][selectOption].name + 
+                " (" + props.startFilters[filter][selectOption].objectcount + 
+                ")"
+              }
             </option>
           ))}
         </select>

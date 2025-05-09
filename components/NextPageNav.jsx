@@ -1,4 +1,5 @@
 const NextPageNav = (props) => {
+    console.log('nav mounted')
     const maxPages = 5;
     const numPages = props.numPages;
     let pagesToDisplay;
