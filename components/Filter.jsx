@@ -1,6 +1,5 @@
 const Filter = (props) => {
   const currentFilters = { century: {}, culture: {}, classification: {} };
-  console.log("filter mounted");
   console.log(
     "search value:",
     props.searchValue,
