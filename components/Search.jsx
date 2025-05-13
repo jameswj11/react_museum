@@ -13,8 +13,7 @@ const Search = (props) => {
         placeholder="Type to search..."
         onChange={(event) => {
           props.setSearchValue(event.target.value);
-          props.setCurrentPage(1);
-          props.setFilterValue({})
+          props.setCurrentPage(1)
         }}
       />
     </div>
