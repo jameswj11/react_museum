@@ -6,7 +6,11 @@ const Filter = (props) => {
     "filter value:",
     props.filterValue,
     "currentFilters:", 
-    currentFilters
+    currentFilters,
+    "results",
+    props.paintings, 
+    "startFilters", 
+    props.startFilters
   );
 
   props.paintings.forEach((result) => {
@@ -73,11 +77,11 @@ const Filter = (props) => {
               (selectOption, index) => (
                 <option
                   key={index}
-                  value={props.startFilters[filter][selectOption].name}
+                  value={selectOption}
                 >
-                  {props.startFilters[filter][selectOption].name +
+                  {selectOption +
                     " (" +
-                    props.startFilters[filter][selectOption].objectcount +
+                    props.startFilters[filter][selectOption] +
                     ")"}
                 </option>
               )

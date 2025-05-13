@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const Search = (props) => {
-  console.log('search mounted')
   return (
     <div>
       <label htmlFor="search">Search the Collection:</label>

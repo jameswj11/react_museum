@@ -12,6 +12,31 @@ p {
     margin-bottom: 0px;
 }
 
+.modalBG {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modalData {
+    display: block;
+    width: 80vw;
+    height: 80vh;
+    background-color: white;
+}
+
+.closed {
+    display: none;
+}
+
+.modalImage {
+    max-width: 800px;
+}
+
 .image-card {
     display: inline-block;
     max-width: 380px;

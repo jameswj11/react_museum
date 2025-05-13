@@ -6,7 +6,7 @@ import NextPageNav from "../components/NextPageNav.jsx";
 import Filter from "../components/Filter.jsx";
 
 const Main = () => {
-  console.log('main loaded')
+  console.log("main loaded");
   const [paintings, setPaintings] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,31 +17,9 @@ const Main = () => {
 
   const numResultsPerPage = 48;
 
-  let apicalled = false;
-  let filterFields = ["century", "culture", "classification"];
-  let startingFilters = {
-    "century" : {},
-    "culture" : {},
-    "classification" : {}
-  }
-
-
-  const setFilterOptions = (response) => {
-    const options = {century: {}, culture: {}, classification: {}};
-    response.map((response) => {
-      Object.keys(options).map((option) => {
-        if (options[option][response[option]]) {
-          options[option][response[option]]++;
-        } else {
-          options[option][response[option]] = 1;
-        }
-      })
-    })
-  }
-
   const searchPaintings = async (searchValue, currentPage, filterValue) => {
-    const filters = document.getElementsByTagName('Select')
-    const newfilterValue = {"culture" : "berber", "century" : "1st century"}
+    const filters = document.getElementsByTagName("Select");
+    const newfilterValue = { culture: "berber", century: "1st century" };
     const url = "https://api.harvardartmuseums.org/object?";
     const params = {
       apikey: "df765b0b-5b18-4c03-ab7a-5538cf101bb3",
@@ -50,13 +28,13 @@ const Main = () => {
       // sort: "totalpageviews",
       sortorder: "desc",
       size: numResultsPerPage,
-      page: currentPage
+      page: currentPage,
     };
 
     if (Object.keys(filterValue).length) {
       Object.keys(filterValue).map((x) => {
-        params[x] = filterValue[x]
-      })
+        params[x] = filterValue[x];
+      });
     }
 
     const response = await fetch(url + new URLSearchParams(params).toString());
@@ -64,35 +42,49 @@ const Main = () => {
 
     if (responseJson.records) {
       showResults(responseJson);
-      // setFilterOptions(responseJson.records)
     }
   };
 
   const searchFields = async () => {
-    let returnObj = {};
+    let returnObj = { century: {}, culture: {}, classification: {} };
 
     const params = {
       apikey: "df765b0b-5b18-4c03-ab7a-5538cf101bb3",
-      size: 999
-    }
-    
-    let centuryUrl = 'https://api.harvardartmuseums.org/century?'
-    let cultureUrl = 'https://api.harvardartmuseums.org/culture?'
-    let classificationUrl = 'https://api.harvardartmuseums.org/classification?'
+      size: 999,
+    };
 
-    const centuryReq = await fetch(centuryUrl + new URLSearchParams(params).toString())
-    const cultureReq = await fetch(cultureUrl + new URLSearchParams(params).toString())
-    const classificationReq = await fetch(classificationUrl + new URLSearchParams(params).toString())
+    let centuryUrl = "https://api.harvardartmuseums.org/century?";
+    let cultureUrl = "https://api.harvardartmuseums.org/culture?";
+    let classificationUrl = "https://api.harvardartmuseums.org/classification?";
+
+    const centuryReq = await fetch(
+      centuryUrl + new URLSearchParams(params).toString()
+    );
+    const cultureReq = await fetch(
+      cultureUrl + new URLSearchParams(params).toString()
+    );
+    const classificationReq = await fetch(
+      classificationUrl + new URLSearchParams(params).toString()
+    );
 
     const centuryJson = await centuryReq.json();
     const cultureJson = await cultureReq.json();
     const classificationJson = await classificationReq.json();
 
-    returnObj.century = centuryJson.records
-    returnObj.culture = cultureJson.records
-    returnObj.classification = classificationJson.records
+    centuryJson.records.map((century) => {
+      returnObj.century[century.name] = century.objectcount;
+    });
 
-    setStartFilters(returnObj)
+    cultureJson.records.map((culture) => {
+      returnObj.culture[culture.name] = culture.objectcount;
+    });
+
+    classificationJson.records.map((classification) => {
+      returnObj.classification[classification.name] =
+        classification.objectcount;
+    });
+
+    setStartFilters(returnObj);
   };
 
   const showResults = (response) => {
@@ -108,11 +100,9 @@ const Main = () => {
 
     // clean up records depending on image URL available
     response.records.forEach((painting) => {
-      if (painting.primaryimageurl) {
-        painting.imageAvailable = true;
-      } else {
-        painting.imageAvailable = false;
-      }
+      painting.primaryimageurl
+        ? (painting.imageAvailable = true)
+        : (painting.imageAvailable = false);
     });
 
     let sortedResults = response.records.sort((a, b) => {
@@ -123,9 +113,7 @@ const Main = () => {
       } else {
         return 0;
       }
-    });
-
-    apicalled = true;
+    }); 
 
     setPaintings(sortedResults);
     setNumPages(response.info.pages);
@@ -133,7 +121,7 @@ const Main = () => {
 
   useEffect(() => {
     searchPaintings(searchValue, currentPage, filterValue);
-    searchFields([])
+    searchFields([]);
   }, [searchValue, currentPage, filterValue]);
 
   return (

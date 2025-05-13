@@ -1,10 +1,16 @@
 import notFound from './not-found.png';
+import Modal from './Modal.jsx';
+import {useState} from 'react';
+
 const Paintings = (props) => {
   console.log('paintings mounted')
-  // console.log('props.paintings:', props.paintings);
-  let paintings = [];
 
-  let sorted = props.paintings.sort()
+  let paintings = [];
+  let modalContent;
+
+  const [isOpen, setIsOpen] = useState(false)
+  const [content, setContent] = useState({})
+
   props.paintings.forEach((painting) => {
     let url = '';
     let imgObj;
@@ -18,7 +24,12 @@ const Paintings = (props) => {
     
 
     paintings.push(
-    <div className='image-card'key={painting.id}>
+    <div className='image-card'key={painting.id} onClick={(event) => {
+      if (!isOpen) {
+        setContent(painting)
+        setIsOpen(!isOpen)
+      }
+    }}>
       {imgObj}
       <div className="image-info">
       <h4>{painting.title}</h4>
@@ -31,6 +42,7 @@ const Paintings = (props) => {
   return (   
     <div className="image-grid">
       {paintings}
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen} content={content} setContent={setContent}/>
     </div>
     )
 };
