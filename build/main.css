@@ -1,3 +1,44 @@
 h1 {
     color: red
 }
+
+h4 {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+p {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.image-card {
+    display: inline-block;
+    max-width: 380px;
+    max-height: 450px;
+    margin: 20px;
+    width: 20%;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .imgNotAvailable {
+        max-width: 380px;
+        max-height: 300 px;
+    }
+}
+
+.image-grid {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.image-info {
+    height: 100px;
+}
+
+.currentPage {
+    background-color: red;
+}

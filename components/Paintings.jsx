@@ -1,3 +1,4 @@
+import notFound from './not-found.png';
 const Paintings = (props) => {
   console.log('paintings mounted')
   // console.log('props.paintings:', props.paintings);
@@ -8,11 +9,13 @@ const Paintings = (props) => {
     let url = '';
     let imgObj;
 
+    
     if (painting.primaryimageurl) {
-      imgObj = <img src={painting.primaryimageurl + "?width=350"} className="img-fluid" alt='painting'></img>;
+      imgObj = <img src={painting.primaryimageurl + "?width=350"} onError={e => e.currentTarget.src = notFound} className="img-fluid" alt='painting'></img>;
     } else {
-      imgObj = <div className="imgNotAvailable"><p>Image Not Available</p></div>;
+      imgObj = <img src={notFound} className="img-fluid"></img>;
     }
+    
 
     paintings.push(
     <div className='image-card'key={painting.id}>
