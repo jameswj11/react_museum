@@ -1,12 +1,14 @@
 import notFound from "./not-found.png";
-import Modal from "./Modal.jsx";
-import { useState } from "react";
 
-const Paintings = ({paintings, showFavorite, favorites, onNewFavorites}) => {
+const Paintings = ({
+  paintings,
+  showFavorite,
+  favorites,
+  isOpen,
+  setIsOpen,
+  setContent,
+}) => {
   let artObjects = [];
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [content, setContent] = useState({});
 
   let artworks = paintings;
 
@@ -49,15 +51,11 @@ const Paintings = ({paintings, showFavorite, favorites, onNewFavorites}) => {
   });
 
   return (
-    <div id={showFavorite ? 'favoriteGrid' : 'resultsGrid'} className='image-grid' style={ showFavorite? {display: "none"} : {display: ""}}>
-      <Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        content={content}
-        setContent={setContent}
-        favorites={favorites}
-        onNewFavorites={onNewFavorites}
-      />
+    <div
+      id={showFavorite ? "favoriteGrid" : "resultsGrid"}
+      className="image-grid"
+      style={showFavorite ? { display: "none" } : { display: "" }}
+    >
       <h2>{showFavorite ? "FAVORITES" : "ART"}</h2>
       {artObjects}
     </div>

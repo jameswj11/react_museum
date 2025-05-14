@@ -1,6 +1,4 @@
-import { useState } from "react";
-
-const Modal = ({isOpen, setIsOpen, content, setContent, favorites, onNewFavorites}) => {
+const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   let modalObj = [];
   let data = {};
 
@@ -27,15 +25,31 @@ const Modal = ({isOpen, setIsOpen, content, setContent, favorites, onNewFavorite
     });
   }
 
-  let newFavorites = [];
+  const handleSetFavorite = () => {
+    let newFavorites = [];
 
+    if (content.favorite === false) {
+      // adding
+      content.favorite = true;
+      newFavorites = [...favorites, content];
+    } else {
+      //removing
+      content.favorite = false;
+      newFavorites = favorites.filter((item) => {
+        console.log('item:', item)
+        return item.favorite == true
+      });
+    }
+
+    setFavorites(newFavorites);
+  };
 
   return (
     <div>
       <div
         className={isOpen ? "modalBG-open" : "modalBG-closed"}
         onClick={(event) => {
-            if (event.target.className != "modalBG-open") return;
+          if (event.target.className != "modalBG-open") return;
           setIsOpen(false);
         }}
       >
@@ -53,11 +67,12 @@ const Modal = ({isOpen, setIsOpen, content, setContent, favorites, onNewFavorite
               id="saveToFavoritesBtn"
               className="saveToFavoritesBtn"
               onClick={(event) => {
-                newFavorites = [...favorites, content]
-                onNewFavorites(newFavorites)
+                handleSetFavorite();
               }}
             >
-              Save To Favorites
+              {content.favorite == true
+                ? "Remove From Favorites"
+                : "Save To Favorites"}
             </button>
           </div>
         </div>

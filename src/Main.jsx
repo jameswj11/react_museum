@@ -16,14 +16,10 @@ const Main = () => {
   const [startFilters, setStartFilters] = useState({});
   const [showFavorite, setshowFavorite] = useState(false);
   const [favorites, setFavorites] = useState([]);
-
-  console.log('FAVORITES FROM MAIN:', favorites)
+  const [isOpen, setIsOpen] = useState(false);
+  const [content, setContent] = useState({});
 
   const numResultsPerPage = 48;
-
-  const toggleModal = (data) => {
-    console.log('toggleModal',)
-  }
 
   const searchPaintings = async (searchValue, currentPage, filterValue) => {
     const filters = document.getElementsByTagName("Select");
@@ -97,6 +93,7 @@ const Main = () => {
   };
 
   const showResults = (response) => {
+    console.log('results:', response)
     // shuffle response records
     const shuffleArray = (array) => {
       for (let i = array - 1; i > 0; i--) {
@@ -109,6 +106,7 @@ const Main = () => {
 
     // clean up records depending on image URL available
     response.records.forEach((painting) => {
+      painting.favorite = false;
       painting.primaryimageurl
         ? (painting.imageAvailable = true)
         : (painting.imageAvailable = false);
@@ -122,38 +120,32 @@ const Main = () => {
       } else {
         return 0;
       }
-    }); 
+    });
 
     setPaintings(sortedResults);
     setNumPages(response.info.pages);
   };
 
-  const updateFavorites = (arr)=> {
-    setFavorites(arr)
-  }
-
-  const showFavorites = () => {
+  const showFavorites = (event) => {
     // to be fixed later and handled in component
-    const faves = document.getElementById("favoriteGrid")
-    const results = document.getElementById("resultsGrid")
+    const faves = document.getElementById("favoriteGrid");
+    const results = document.getElementById("resultsGrid");
 
-    if (faves.style.display == 'none') {
-      faves.style.display = ''
-      results.style.display = 'none'
+    if (faves.style.display == "none") {
+      faves.style.display = "";
+      results.style.display = "none";
+      event.target.innerHTML = "Back to Results"
     } else {
-      faves.style.display = 'none'
-      results.style.display = ''
+      faves.style.display = "none";
+      results.style.display = "";
+      event.target.innerHTML = "View Favorites"
     }
-  }
+  };
 
   useEffect(() => {
     searchPaintings(searchValue, currentPage, filterValue);
     searchFields([]);
   }, [searchValue, currentPage, filterValue]);
-
-  useEffect(() => {
-    updateFavorites(favorites)
-  }, [favorites])
 
   return (
     <div>
@@ -170,18 +162,33 @@ const Main = () => {
         setFilterValue={setFilterValue}
         startFilters={startFilters}
         searchValue={searchValue}
-      />  
-      <button className="view-favorites-button" onClick={showFavorites}>View Favorites</button>
-      <Paintings 
-        paintings={paintings} 
+      />
+      <button className="view-favorites-button" onClick={showFavorites}>
+        View Favorites
+      </button>
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        content={content}
+        favorites={favorites}
+        setFavorites={setFavorites}
+      />
+      <Paintings
+        paintings={paintings}
         favorites={favorites}
         showFavorite={false}
-        onNewFavorites={updateFavorites}
+        // onNewFavorites={updateFavorites}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setContent={setContent}
       />
       <Paintings 
-        paintings={favorites}
-        showFavorite={true}
-      />
+      paintings={favorites} 
+      showFavorite={true} 
+      favorites={favorites}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      setContent={setContent}/>
       <NextPageNav
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}

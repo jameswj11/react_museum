@@ -1,17 +1,5 @@
 const Filter = (props) => {
   const currentFilters = { century: {}, culture: {}, classification: {} };
-  console.log(
-    "search value:",
-    props.searchValue,
-    "filter value:",
-    props.filterValue,
-    "currentFilters:", 
-    currentFilters,
-    "results",
-    props.paintings, 
-    "startFilters", 
-    props.startFilters
-  );
 
   props.paintings.forEach((result) => {
     Object.keys(currentFilters).forEach((filter) => {
