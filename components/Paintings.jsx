@@ -4,13 +4,6 @@ import { useState } from "react";
 
 const Paintings = ({paintings, showFavorite, favorites, onNewFavorites}) => {
   let artObjects = [];
-  let isFavoriteGrid;
-
-  if (showFavorite === undefined) {
-    isFavoriteGrid = false
-  } else {
-    isFavoriteGrid = true
-  }
 
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState({});
@@ -56,7 +49,7 @@ const Paintings = ({paintings, showFavorite, favorites, onNewFavorites}) => {
   });
 
   return (
-    <div className="image-grid">
+    <div id={showFavorite ? 'favoriteGrid' : 'resultsGrid'} className='image-grid' style={ showFavorite? {display: "none"} : {display: ""}}>
       <Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -65,7 +58,7 @@ const Paintings = ({paintings, showFavorite, favorites, onNewFavorites}) => {
         favorites={favorites}
         onNewFavorites={onNewFavorites}
       />
-      <h2>{isFavoriteGrid ? "FAVORITES" : "ART"}</h2>
+      <h2>{showFavorite ? "FAVORITES" : "ART"}</h2>
       {artObjects}
     </div>
   );

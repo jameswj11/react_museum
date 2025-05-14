@@ -16,8 +16,6 @@ const Main = () => {
   const [startFilters, setStartFilters] = useState({});
   const [showFavorite, setshowFavorite] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [content, setContent] = useState({});
 
   console.log('FAVORITES FROM MAIN:', favorites)
 
@@ -135,7 +133,17 @@ const Main = () => {
   }
 
   const showFavorites = () => {
-    console.log('show favorites')
+    // to be fixed later and handled in component
+    const faves = document.getElementById("favoriteGrid")
+    const results = document.getElementById("resultsGrid")
+
+    if (faves.style.display == 'none') {
+      faves.style.display = ''
+      results.style.display = 'none'
+    } else {
+      faves.style.display = 'none'
+      results.style.display = ''
+    }
   }
 
   useEffect(() => {
@@ -167,6 +175,7 @@ const Main = () => {
       <Paintings 
         paintings={paintings} 
         favorites={favorites}
+        showFavorite={false}
         onNewFavorites={updateFavorites}
       />
       <Paintings 

@@ -41,15 +41,6 @@ p {
     margin-top: 50px;
 }
 
-/* .closed {
-    display: none;
-} */
-
-.favorites-hide {
-    display: none;
-}
-
-
 .modal-open {
     overflow: 'hidden';
 }
