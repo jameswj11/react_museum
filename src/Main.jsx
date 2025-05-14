@@ -31,8 +31,9 @@ const Main = () => {
     const filters = document.getElementsByTagName("Select");
     const newfilterValue = { culture: "berber", century: "1st century" };
     const url = "https://api.harvardartmuseums.org/object?";
+
     const params = {
-      apikey: "df765b0b-5b18-4c03-ab7a-5538cf101bb3",
+      apikey: process.env.API_KEY,
       q: searchValue,
       hasimage: 1,
       sort: "totalpageviews",
@@ -59,7 +60,7 @@ const Main = () => {
     let returnObj = { century: {}, culture: {}, classification: {} };
 
     const params = {
-      apikey: "df765b0b-5b18-4c03-ab7a-5538cf101bb3",
+      apikey: process.env.API_KEY,
       size: 999,
     };
 
