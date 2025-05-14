@@ -130,14 +130,17 @@ const Main = () => {
     // to be fixed later and handled in component
     const faves = document.getElementById("favoriteGrid");
     const results = document.getElementById("resultsGrid");
+    const pageNav = document.getElementById("pageNav")
 
     if (faves.style.display == "none") {
       faves.style.display = "";
       results.style.display = "none";
+      pageNav.style.display = "none";
       event.target.innerHTML = "Back to Results"
     } else {
       faves.style.display = "none";
       results.style.display = "";
+      pageNav.style.display = ""
       event.target.innerHTML = "View Favorites"
     }
   };
@@ -194,6 +197,7 @@ const Main = () => {
         setCurrentPage={setCurrentPage}
         numPages={numPages}
         paintings={paintings}
+        favorites={favorites}
       />
     </div>
   );

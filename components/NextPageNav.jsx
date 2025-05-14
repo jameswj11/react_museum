@@ -1,5 +1,4 @@
 const NextPageNav = (props) => {
-    console.log('nav mounted')
     const maxPages = 5;
     const numPages = props.numPages;
     let pagesToDisplay;
@@ -12,7 +11,7 @@ const NextPageNav = (props) => {
     }
 
     return (
-        <div>
+        <div id="pageNav">
             {
                 currentPage > 1 ? <button onClick={(event) => {
                     currentPage--;

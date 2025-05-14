@@ -56,7 +56,7 @@ const Paintings = ({
       className="image-grid"
       style={showFavorite ? { display: "none" } : { display: "" }}
     >
-      <h2>{showFavorite ? "FAVORITES" : "ART"}</h2>
+      <h2>{showFavorite ? "Favorites" : "Search Results"}</h2>
       {artObjects}
     </div>
   );

@@ -36,7 +36,6 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       //removing
       content.favorite = false;
       newFavorites = favorites.filter((item) => {
-        console.log('item:', item)
         return item.favorite == true
       });
     }
