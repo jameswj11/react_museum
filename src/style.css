@@ -45,6 +45,10 @@ p {
     display: none;
 } */
 
+.favorites-hide {
+    display: none;
+}
+
 
 .modal-open {
     overflow: 'hidden';

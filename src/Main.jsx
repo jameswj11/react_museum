@@ -4,6 +4,7 @@ import Search from "../components/Search.jsx";
 import Paintings from "../components/Paintings.jsx";
 import NextPageNav from "../components/NextPageNav.jsx";
 import Filter from "../components/Filter.jsx";
+import Modal from "../components/Modal.jsx";
 
 const Main = () => {
   console.log("main loaded");
@@ -13,9 +14,18 @@ const Main = () => {
   const [numPages, setNumPages] = useState("");
   const [filterValue, setFilterValue] = useState({});
   const [startFilters, setStartFilters] = useState({});
-  const [filterLabelOptions, setFilterLabelOptions] = useState({});
+  const [showFavorite, setshowFavorite] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [content, setContent] = useState({});
+
+  console.log('FAVORITES FROM MAIN:', favorites)
 
   const numResultsPerPage = 48;
+
+  const toggleModal = (data) => {
+    console.log('toggleModal',)
+  }
 
   const searchPaintings = async (searchValue, currentPage, filterValue) => {
     const filters = document.getElementsByTagName("Select");
@@ -25,7 +35,7 @@ const Main = () => {
       apikey: "df765b0b-5b18-4c03-ab7a-5538cf101bb3",
       q: searchValue,
       hasimage: 1,
-      // sort: "totalpageviews",
+      sort: "totalpageviews",
       sortorder: "desc",
       size: numResultsPerPage,
       page: currentPage,
@@ -119,10 +129,22 @@ const Main = () => {
     setNumPages(response.info.pages);
   };
 
+  const updateFavorites = (arr)=> {
+    setFavorites(arr)
+  }
+
+  const showFavorites = () => {
+    console.log('show favorites')
+  }
+
   useEffect(() => {
     searchPaintings(searchValue, currentPage, filterValue);
     searchFields([]);
   }, [searchValue, currentPage, filterValue]);
+
+  useEffect(() => {
+    updateFavorites(favorites)
+  }, [favorites])
 
   return (
     <div>
@@ -139,8 +161,17 @@ const Main = () => {
         setFilterValue={setFilterValue}
         startFilters={startFilters}
         searchValue={searchValue}
+      />  
+      <button className="view-favorites-button" onClick={showFavorites}>View Favorites</button>
+      <Paintings 
+        paintings={paintings} 
+        favorites={favorites}
+        onNewFavorites={updateFavorites}
       />
-      <Paintings paintings={paintings} />
+      <Paintings 
+        paintings={favorites}
+        showFavorite={true}
+      />
       <NextPageNav
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
