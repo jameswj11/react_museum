@@ -12,7 +12,13 @@ p {
     margin-bottom: 0px;
 }
 
-.modalBG {
+#saveToFavoritesBtn {
+    /* position: fixed;
+    bottom: 0; */
+    margin-top: 20px;
+}
+
+.modalBG-open {
     display: block;
     width: 100vw;
     height: 100vh;
@@ -20,21 +26,49 @@ p {
     top: 0;
     left: 0;
     background-color: rgba(0,0,0,0.6);
+    text-align: center;
 }
 
-.modalData {
-    display: block;
-    width: 80vw;
-    height: 80vh;
-    background-color: white;
-}
-
-.closed {
+.modalBG-closed {
     display: none;
 }
 
-.modalImage {
-    max-width: 800px;
+.modalData {
+    display: inline-block;
+    background-color: white;
+    width: 80%;
+    height: 90%;
+    margin-top: 50px;
+}
+
+/* .closed {
+    display: none;
+} */
+
+
+.modal-open {
+    overflow: 'hidden';
+}
+
+.modalImgContainer {
+    width: 50%;
+    height: 100%;
+    float: left
+}
+
+.modalContentContainer {
+    width: 50%;
+    height: 100%;
+    float: right
+}
+
+.modalImg {
+    /* width: 40%; */
+    position: relative;
+    max-width: 100%;
+    max-height: 90%;
+    top: 0;
+    left: 0;
 }
 
 .image-card {

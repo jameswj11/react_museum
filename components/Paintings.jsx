@@ -27,7 +27,7 @@ const Paintings = (props) => {
     <div className='image-card'key={painting.id} onClick={(event) => {
       if (!isOpen) {
         setContent(painting)
-        setIsOpen(!isOpen)
+        setIsOpen(true)
       }
     }}>
       {imgObj}
@@ -41,8 +41,8 @@ const Paintings = (props) => {
 
   return (   
     <div className="image-grid">
-      {paintings}
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} content={content} setContent={setContent}/>
+      {paintings}
     </div>
     )
 };
