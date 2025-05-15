@@ -19,12 +19,14 @@ const Main = () => {
   const [favorites, setFavorites] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState({});
+  const [selectValue, setSelectValue] = useState(false)
 
   const [searchByFilter, setSearchByFilter] = useState([])
 
   const numResultsPerPage = 48;
 
   const searchPaintings = async (searchValue, currentPage, filterValue, searchByFilter) => {
+    // return
     console.log('searchByFilter', searchByFilter)
     const filters = document.getElementsByTagName("Select");
     const newfilterValue = { culture: "berber", century: "1st century" };
@@ -157,11 +159,19 @@ const Main = () => {
     searchFields([]);
   }, [searchValue, currentPage, filterValue, searchByFilter]);
 
-  const setSelectOption = (filterBy, selected)=> {
-    let newSearchOptions = [...searchByFilter, {[filterBy] : selected}];
+  const setSelectOption = (output)=> {
+    console.log('output', output)
+    let newSearchOptions = [...searchByFilter, {[Object.keys(output)[0]] : output[Object.keys(output)[0]]}];
+    console.log('new search options:', newSearchOptions)
     // newSearchOptions.push({filterBy : selected})
     setSearchByFilter(newSearchOptions)
-    console.log('setSelectOption:', filterBy, selected)
+
+    if (newSearchOptions.length > 0) {
+      setSelectValue(true)
+    } else {
+      setSelectValue(false)
+    }
+    // console.log('setSelectOption:', filterBy, selected)
   }
 
   return (
@@ -177,6 +187,7 @@ const Main = () => {
         startFilters={startFilters}
         setSelectOption={setSelectOption}
         searchValue={searchValue}
+        selectValue={selectValue}
         paintings={paintings}
         // filterValue={filterValue}
         // setFilterValue={setFilterValue}

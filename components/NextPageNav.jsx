@@ -1,4 +1,5 @@
 const NextPageNav = (props) => {
+
     const maxPages = 5;
     const numPages = props.numPages;
     let pagesToDisplay;
