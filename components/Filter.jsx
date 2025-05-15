@@ -1,84 +1,67 @@
-const Filter = (props) => {
-  const currentFilters = { century: {}, culture: {}, classification: {} };
+import React from "react";
+import Select from "react-select";
 
-  props.paintings.forEach((result) => {
-    Object.keys(currentFilters).forEach((filter) => {
-      if (currentFilters[filter][result[filter]] != undefined) {
-        currentFilters[filter][result[filter]]++;
-      } else {
-        currentFilters[filter][result[filter]] = 1;
+const ReactFilter = ({
+  setSelectOption,
+  startFilters,
+  searchValue,
+  paintings,
+}) => {
+  console.log("filter props:", startFilters);
+  let centuries = [];
+
+  if (startFilters.century) {
+    Object.keys(startFilters.century).forEach((key) => {
+      centuries.push({ value: key, label: key });
+    });
+  }
+
+  const setFilters = (paintings) => {
+    centuries = [];
+    paintings.forEach((painting) => {
+      if (centuries.some((obj) => obj.value == painting.century) == false) {
+        centuries.push({ value: painting.century, label: painting.century });
       }
     });
-  });
 
-  if (props.searchValue || Object.keys(props.filterValue).length) {
-    // not a blank search
-    return(
-        <div>
-        {Object.keys(currentFilters).map((filter, index) => (
-            <select
-            key={index}
-            name={filter}
-            onChange={(event) => {
-                props.setFilterValue(prevState => (
-                    {...prevState, [filter]: event.target.value}));
-            }}
-            >
-            <option key={"default"} value="">
-                {filter == "classification" ? "object type" : filter}
-            </option>
-            {Object.keys(currentFilters[filter]).map(
-                (selectOption, index) => (
-                <option
-                    key={index}
-                    value={selectOption}>
-                    {
-                    selectOption +
-                    " (" +
-                    currentFilters[filter][selectOption] +
-                    ")"}
-                </option>
-                )
-            )}
-            </select>
-        ))}
-        </div>
-    )
+    return centuries;
+  };
 
-  } else {
-    // blank search
-    return (
-      <div>
-        {Object.keys(props.startFilters).map((filter, index) => (
-          <select
-            key={index}
-            name={filter}
-            onChange={(event) => {
-                props.setFilterValue(prevState => (
-                    {...prevState, [filter] : event.target.value}));
-            }}
-          >
-            <option key={"default"} value="">
-              {filter == "classification" ? "object type" : filter}
-            </option>
-            {Object.keys(props.startFilters[filter]).map(
-              (selectOption, index) => (
-                <option
-                  key={index}
-                  value={selectOption}
-                >
-                  {selectOption +
-                    " (" +
-                    props.startFilters[filter][selectOption] +
-                    ")"}
-                </option>
-              )
-            )}
-          </select>
-        ))}
-      </div>
-    );
+  if (searchValue) {
+    centuries = setFilters(paintings);
   }
+
+  console.log("centuries:", centuries);
+  
+  const testFunc = (event)=> {
+    setSelectOption('century', event.value)
+  }
+
+  return (
+    <div>
+      <Select
+        defaultValue={null}
+        onChange={testFunc}
+        options={centuries}
+      />
+      <Select
+        defaultValue={null}
+        onChange={setSelectOption}
+        options={[
+          { value: "01", label: "01" },
+          { value: "01", label: "01" },
+        ]}
+      />
+      <Select
+        defaultValue={null}
+        onChange={setSelectOption}
+        options={[
+          { value: "room", label: "room" },
+          { value: "space", label: "space" },
+        ]}
+      />
+    </div>
+  );
 };
 
-export default Filter;
+export default ReactFilter;

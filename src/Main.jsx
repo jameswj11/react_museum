@@ -5,6 +5,7 @@ import Paintings from "../components/Paintings.jsx";
 import NextPageNav from "../components/NextPageNav.jsx";
 import Filter from "../components/Filter.jsx";
 import Modal from "../components/Modal.jsx";
+import Select from 'react-select';
 
 const Main = () => {
   console.log("main loaded");
@@ -19,9 +20,12 @@ const Main = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState({});
 
+  const [searchByFilter, setSearchByFilter] = useState([])
+
   const numResultsPerPage = 48;
 
-  const searchPaintings = async (searchValue, currentPage, filterValue) => {
+  const searchPaintings = async (searchValue, currentPage, filterValue, searchByFilter) => {
+    console.log('searchByFilter', searchByFilter)
     const filters = document.getElementsByTagName("Select");
     const newfilterValue = { culture: "berber", century: "1st century" };
     const url = "https://api.harvardartmuseums.org/object?";
@@ -36,11 +40,14 @@ const Main = () => {
       page: currentPage,
     };
 
-    if (Object.keys(filterValue).length) {
-      Object.keys(filterValue).map((x) => {
-        params[x] = filterValue[x];
-      });
+    if (searchByFilter.length > 0) {
+      for (let i = 0; i < searchByFilter.length; i++) {
+        let key = Object.keys(searchByFilter[i])[0]
+        params[key] = searchByFilter[i][key]
+      }
     }
+
+    console.log(params)
 
     const response = await fetch(url + new URLSearchParams(params).toString());
     const responseJson = await response.json();
@@ -146,9 +153,16 @@ const Main = () => {
   };
 
   useEffect(() => {
-    searchPaintings(searchValue, currentPage, filterValue);
+    searchPaintings(searchValue, currentPage, filterValue, searchByFilter);
     searchFields([]);
-  }, [searchValue, currentPage, filterValue]);
+  }, [searchValue, currentPage, filterValue, searchByFilter]);
+
+  const setSelectOption = (filterBy, selected)=> {
+    let newSearchOptions = [...searchByFilter, {[filterBy] : selected}];
+    // newSearchOptions.push({filterBy : selected})
+    setSearchByFilter(newSearchOptions)
+    console.log('setSelectOption:', filterBy, selected)
+  }
 
   return (
     <div>
@@ -160,11 +174,14 @@ const Main = () => {
         setCurrentPage={setCurrentPage}
       />
       <Filter
-        paintings={paintings}
-        filterValue={filterValue}
-        setFilterValue={setFilterValue}
         startFilters={startFilters}
+        setSelectOption={setSelectOption}
         searchValue={searchValue}
+        paintings={paintings}
+        // filterValue={filterValue}
+        // setFilterValue={setFilterValue}
+        // startFilters={startFilters}
+        // searchValue={searchValue}
       />
       <button className="view-favorites-button" onClick={showFavorites}>
         View Favorites
