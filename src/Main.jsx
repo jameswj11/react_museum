@@ -5,6 +5,8 @@ import Paintings from "../components/Paintings.jsx";
 import NextPageNav from "../components/NextPageNav.jsx";
 import Filter from "../components/Filter.jsx";
 import Modal from "../components/Modal.jsx";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Main = () => {
   console.log("main loaded");
@@ -16,14 +18,14 @@ const Main = () => {
   const [favorites, setFavorites] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState({});
-  const [selected, setSelected] = useState(false)
-  const [searchByFilter, setSearchByFilter] = useState([])
+  const [selected, setSelected] = useState(false);
+  const [searchByFilter, setSearchByFilter] = useState([]);
 
   const numResultsPerPage = 48;
 
   const searchPaintings = async (searchValue, currentPage, searchByFilter) => {
     const url = "https://api.harvardartmuseums.org/object?";
-    console.log('searchPaintings', searchByFilter)
+    // console.log('searchPaintings', searchByFilter)
     const params = {
       apikey: process.env.API_KEY,
       q: searchValue,
