@@ -2,6 +2,10 @@ h1 {
     color: red
 }
 
+.body-modal-open {
+    overflow: hidden;
+}
+
 h4 {
     margin-top: 10px;
     margin-bottom: 0px;
@@ -13,9 +17,24 @@ p {
 }
 
 #saveToFavoritesBtn {
-    /* position: fixed;
-    bottom: 0; */
     margin-top: 20px;
+}
+
+.closeModalButton {
+    display: none;
+}
+
+.additionalImageContainer {
+    text-align: justify;
+}
+
+.additionalImageThumbnail {
+    height: 79px;
+    width: 79px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
 }
 
 .modalBG-open {
@@ -39,6 +58,7 @@ p {
     width: 80%;
     height: 90%;
     margin-top: 50px;
+    overflow-y: scroll;
 }
 
 
@@ -49,7 +69,7 @@ p {
 .modalImgContainer {
     width: 50%;
     height: 100%;
-    float: left
+    float: right
 }
 
 .imageWrapper {
@@ -77,7 +97,9 @@ p {
 .modalContentContainer {
     width: 50%;
     height: 100%;
-    float: right
+    float: left;
+    text-align: left;
+    /* padding: 5px; */
 }
 
 .modalImg {
