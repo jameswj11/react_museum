@@ -59,7 +59,6 @@ const ReactFilter = ({
   let newFilters = {};
   if (searchValue || selected) {
     newFilters = setFilters(paintings);
-    console.log("new filters:", newFilters);
 
     centuries = newFilters.centuries;
     cultures = newFilters.cultures;
@@ -67,7 +66,6 @@ const ReactFilter = ({
   }
 
   const testFunc = (type, event) => {
-    console.log('testFunc:', event)
     if (event == null) {
       setSelectOption({ [type]: "" });
     } else {
@@ -78,11 +76,13 @@ const ReactFilter = ({
   return (
     <div className="container">
       <div className="row">
+        <h4>Filter By:</h4>
         <div className="col">
           <Select
             defaultValue={null}
             isClearable
             isSearchable
+            placeholder={"Century / Millennium"}
             onChange={(event) => {
               testFunc("century", event);
             }}
@@ -94,6 +94,7 @@ const ReactFilter = ({
             defaultValue={null}
             isClearable
             isSearchable
+            placeholder={"Culture / Country"}
             onChange={(event) => {
               testFunc("culture", event);
             }}
@@ -105,6 +106,7 @@ const ReactFilter = ({
             defaultValue={null}
             isClearable
             isSearchable
+            placeholder={"Object Type / Material"}
             onChange={(event) => {
               testFunc("classification", event);
             }}
