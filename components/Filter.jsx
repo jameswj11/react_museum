@@ -74,9 +74,8 @@ const ReactFilter = ({
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <h4>Filter By:</h4>
+      <div className="row filterBy">
+        <h4>Filter By</h4>
         <div className="col">
           <Select
             defaultValue={null}
@@ -114,7 +113,6 @@ const ReactFilter = ({
           />
         </div>
       </div>
-    </div>
   );
 };
 

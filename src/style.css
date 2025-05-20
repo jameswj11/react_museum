@@ -1,19 +1,27 @@
-h1 {
-    color: red
+.title {
+    margin-bottom: 25px;
+    padding-top: 50px;
 }
 
 .body-modal-open {
     overflow: hidden;
 }
 
-h4 {
+p {
     margin-top: 10px;
     margin-bottom: 0px;
 }
 
-p {
-    margin-top: 10px;
-    margin-bottom: 0px;
+.view-favorites-button {
+    margin-bottom: 30px;
+}
+
+.filterBy {
+    margin-bottom: 20px;
+}
+
+#searchBar {
+    margin-bottom: 20px;
 }
 
 #saveToFavoritesBtn {
@@ -94,6 +102,11 @@ p {
     text-align: center;
 }
 
+.imageWrapper:hover {
+    cursor: pointer;
+    background-color: rgba(233,233,233);
+}
+
 .modalContentContainer {
     width: 50%;
     height: 100%;
@@ -126,6 +139,14 @@ p {
 
 .container-fluid {
     max-width: 90vw !important;
+    /* margin-top: 10px !important; */
+}
+
+.lineSeparator {
+    height: 1px;
+    background-color: rgba(233,233,233);
+    margin-bottom: 40px;
+    margin-top: 15px;
 }
 
 .maker, .date {
@@ -151,4 +172,16 @@ p {
 h4 {
     font-size: 1rem !important;
     font-weight: 600 !important;
+    margin-top: 10px    ;
+    margin-bottom: 0px ;
+
+}
+
+b.title:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.headerContainer {
+    border-bottom: 1px solid rgb(200, 200, 200);
 }

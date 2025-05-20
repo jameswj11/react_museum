@@ -71,7 +71,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
         <div
           className="additionalImageThumbnail"
           key={index}
-          style={{'background-image': 'url(' + image.baseimageurl + "?width=100" + ')'}}
+          style={{'backgroundImage': 'url(' + image.baseimageurl + "?width=100" + ')'}}
           onClick={(e) => {
             e.stopPropagation();
             updateImageUrl(image.baseimageurl);
@@ -120,8 +120,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           <div className="modalContentContainer">
             {modalObj}
             <button
+                type="button"
               id="saveToFavoritesBtn"
-              className="saveToFavoritesBtn"
+              className="btn btn-saveToFavoritesBtn"
               onClick={(event) => {
                 handleSetFavorite();
               }}
