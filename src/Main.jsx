@@ -146,7 +146,7 @@ const Main = () => {
 
   useEffect(() => {
     searchPaintings(searchValue, currentPage, searchByFilter);
-    searchFields([]);
+    // searchFields([]);
   }, [searchValue, currentPage, searchByFilter]);
 
   const setSelectOption = (output)=> {

@@ -3,22 +3,29 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   let data = {};
 
   if (Object.keys(content).length) {
+    console.log(content)
     data = {
       title: content.title,
-      century: content.century,
-      classification: content.classification,
-      division: content.division,
-      department: content.department,
-      date: content.dated,
+      maker: '',
       culture: content.culture,
+      date: content.dated,
+      labeltext: content.labeltext,
+      classification: content.classification,
       creditline: content.creditline,
+      provenance: content.provenance,
       copyright: content.copyright,
     };
+
+    if (content.peoplecount > 0) {
+        data.maker = content.people[0].name
+=       data.displaydate = content.people[0].displaydate;
+        data.birthplace = content.people[0].birthplace;
+        data.deathplace = content.people[0].deathplace;
+    }
 
     Object.keys(data).map((key) => {
       modalObj.push(
         <p key={key}>
-          <b>{key + ": "}</b>
           {data[key]}
         </p>
       );

@@ -13,8 +13,6 @@ p {
 }
 
 #saveToFavoritesBtn {
-    /* position: fixed;
-    bottom: 0; */
     margin-top: 20px;
 }
 
@@ -49,7 +47,7 @@ p {
 .modalImgContainer {
     width: 50%;
     height: 100%;
-    float: left
+    float: right
 }
 
 .imageWrapper {
@@ -77,7 +75,9 @@ p {
 .modalContentContainer {
     width: 50%;
     height: 100%;
-    float: right
+    float: left;
+    text-align: left;
+    /* padding: 5px; */
 }
 
 .modalImg {
