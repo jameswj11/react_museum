@@ -39,7 +39,7 @@ const Paintings = ({
           ></img>
         );
       } else {
-        imgObj = <img src={notFound} className="img-fluid"></img>;
+        imgObj = <img src={notFound + `?v=${Date.now()}`} className="img-fluid"></img>;
       }
       
       artObjects.push(
@@ -70,7 +70,7 @@ const Paintings = ({
         id={showFavorite ? "favoriteGrid" : "resultsGrid"}
         style={showFavorite ? { display: "none" } : { display: "" }}
       >
-        <b>{showFavorite ? "Showing Favorites" : "Showing Results"}</b>
+        <b className="showingResultsText">{showFavorite ? "Showing Favorites" : "Showing Results"}</b>
         {artObjects}
       </Row>
   );

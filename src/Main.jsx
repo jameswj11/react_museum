@@ -139,7 +139,7 @@ const Main = () => {
       results.style.display = "none";
       pageNav.style.display = "none";
       viewText.innerHTML = "Show Search Results"
-      event.target.innerHTML = "Show Results";
+      event.target.innerHTML = "Show Search";
     } else {
       faves.style.display = "none";
       results.style.display = "";
@@ -172,11 +172,11 @@ const Main = () => {
   return (
     <div>
       <div className="container-fluid">
-        <div className="row title">
+        <div className="row header">
           <h1>Explore the Harvard Museums</h1>
         </div>
         <div className="row">
-          <h4 className="">Search the Collection</h4>
+          <h4 className="searchTheCollection">Search the Collection</h4>
           <Search
             searchValue={searchValue}
             setSearchValue={setSearchValue}
@@ -198,7 +198,7 @@ const Main = () => {
               className="btn btn-outline-secondary view-favorites-button"
               onClick={showFavorites}
             >
-              View Favorites
+              Show Favorites
             </button>
           </div>
         </div>

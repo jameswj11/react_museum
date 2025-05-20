@@ -122,7 +122,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
             <button
                 type="button"
               id="saveToFavoritesBtn"
-              className="btn btn-saveToFavoritesBtn"
+              className="btn btn-outline-dark btn-saveToFavoritesBtn"
               onClick={(event) => {
                 handleSetFavorite();
               }}

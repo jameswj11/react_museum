@@ -1,7 +1,4 @@
-.title {
-    margin-bottom: 25px;
-    padding-top: 50px;
-}
+
 
 .body-modal-open {
     overflow: hidden;
@@ -14,6 +11,7 @@ p {
 
 .view-favorites-button {
     margin-bottom: 30px;
+    width: 145px;
 }
 
 .filterBy {
@@ -22,6 +20,7 @@ p {
 
 #searchBar {
     margin-bottom: 20px;
+    max-width: 498px !important;
 }
 
 #saveToFavoritesBtn {
@@ -58,6 +57,14 @@ p {
 
 .modalBG-closed {
     display: none;
+}
+
+.searchTheCollection, .filterByText, #viewFavoritesText {
+    margin-bottom: 10px;
+}
+
+.showingResultsText {
+    color: rgb(100, 100, 100);
 }
 
 .modalData {
@@ -137,6 +144,8 @@ p {
     }
 }
 
+
+
 .container-fluid {
     max-width: 90vw !important;
     /* margin-top: 10px !important; */
@@ -165,9 +174,28 @@ p {
     margin-bottom: 10px;
 }
 
+#searchAddon {
+    margin-left: -4px !important;
+}
+
 .currentPage {
     background-color: red;
 }
+
+.pageNavContainer {
+    text-align: center;
+
+    .pageNavButton {
+        width: 50px;
+        height: 50px;
+        margin: 15px 10px 50px 10px
+    }
+
+    .active {
+        background-color: blue;
+    }
+}
+
 
 h4 {
     font-size: 1rem !important;
@@ -175,6 +203,15 @@ h4 {
     margin-top: 10px    ;
     margin-bottom: 0px ;
 
+}
+
+.header {
+    padding-top: 40px;
+    margin-bottom: 15px;
+}
+
+.title {
+    margin-bottom: 15px;
 }
 
 b.title:hover {
