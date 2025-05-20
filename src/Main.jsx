@@ -91,6 +91,7 @@ const Main = () => {
     });
 
     setStartFilters(returnObj);
+    console.log('start filters from main:', startFilters)
   };
 
   const showResults = (response) => {
@@ -148,7 +149,7 @@ const Main = () => {
 
   useEffect(() => {
     searchPaintings(searchValue, currentPage, searchByFilter);
-    // searchFields([]);
+    searchFields([]);
   }, [searchValue, currentPage, searchByFilter]);
 
   const setSelectOption = (output)=> {
@@ -161,8 +162,6 @@ const Main = () => {
     } else {
       setSelected(false)
     }
-
-    console.log('setSelectOption', newSearchOptions)
   }
 
   return (
