@@ -13,7 +13,6 @@ const Search = (props) => {
         placeholder="Type to search..."
         onChange={(event) => {
           props.setSearchValue(event.target.value);
-          console.log('search value:', props.searchValue)
           props.setCurrentPage(1)
         }}
       />

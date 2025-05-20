@@ -52,6 +52,28 @@ p {
     float: left
 }
 
+.imageWrapper {
+    height: 350px;
+    background-color: rgba(244,244,244);
+
+    .align-helper {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        max-height: 100%;
+        width: auto;
+        margin: auto;
+        vertical-align: middle;
+    }
+
+    text-align: center;
+}
+
 .modalContentContainer {
     width: 50%;
     height: 100%;
@@ -67,17 +89,12 @@ p {
     left: 0;
 }
 
-.image-card {
+.collectionObject {
     display: inline-block;
     max-width: 380px;
     max-height: 450px;
     margin: 20px;
     width: 20%;
-
-    img {
-        max-width: 100%;
-        height: auto;
-    }
 
     .imgNotAvailable {
         max-width: 380px;

@@ -31,7 +31,7 @@ const Paintings = ({
 
     artObjects.push(
       <div
-        className="image-card"
+        className="collectionObject"
         key={painting.id}
         onClick={(event) => {
           if (!isOpen) {
@@ -40,7 +40,10 @@ const Paintings = ({
           }
         }}
       >
-        {imgObj}
+        <div className="imageWrapper col">
+          <span className="align-helper"></span>
+          {imgObj}
+        </div>
         <div className="image-info">
           <h4>{painting.title}</h4>
           {painting.people ? <p>{painting.people[0].name} </p> : <br />}
@@ -51,13 +54,15 @@ const Paintings = ({
   });
 
   return (
-    <div
-      id={showFavorite ? "favoriteGrid" : "resultsGrid"}
-      className="image-grid"
-      style={showFavorite ? { display: "none" } : { display: "" }}
-    >
-      <h2>{showFavorite ? "Favorites" : "Search Results"}</h2>
-      {artObjects}
+    <div className="container">
+      <div
+        id={showFavorite ? "favoriteGrid" : "resultsGrid"}
+        className="image-grid row"
+        style={showFavorite ? { display: "none" } : { display: "" }}
+      >
+        <h2>{showFavorite ? "Favorites" : "Search Results"}</h2>
+        {artObjects}
+      </div>
     </div>
   );
 };
