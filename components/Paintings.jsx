@@ -1,4 +1,8 @@
 import notFound from "./not-found.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const Paintings = ({
   paintings,
@@ -30,7 +34,10 @@ const Paintings = ({
     }
 
     artObjects.push(
-      <div
+      <Col
+        xl={4}
+        xxl={3}
+        sm={6}
         className="collectionObject"
         key={painting.id}
         onClick={(event) => {
@@ -40,30 +47,30 @@ const Paintings = ({
           }
         }}
       >
-        <div className="imageWrapper col">
+        <div className="imageWrapper">
           <span className="align-helper"></span>
           {imgObj}
         </div>
         <div className="image-info">
           <h4>{painting.title}</h4>
-          {painting.people ? <p>{painting.people[0].name} </p> : <br />}
-          {painting.dated ? <p>{painting.dated}</p> : <br />}
+          {painting.people ? <p className="maker">{painting.people[0].name} </p> : null}
+          {painting.dated ? <p className="date">{painting.dated}</p> : <br />}
         </div>
-      </div>
+      </Col>
     );
   });
 
   return (
-    <div className="container">
-      <div
+    <Container fluid>
+      <Row
+      className="gy-5"
         id={showFavorite ? "favoriteGrid" : "resultsGrid"}
-        className="image-grid row"
         style={showFavorite ? { display: "none" } : { display: "" }}
       >
         <h2>{showFavorite ? "Favorites" : "Search Results"}</h2>
         {artObjects}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

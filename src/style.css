@@ -90,16 +90,25 @@ p {
 }
 
 .collectionObject {
-    display: inline-block;
-    max-width: 380px;
-    max-height: 450px;
-    margin: 20px;
-    width: 20%;
+    /* display: inline-block; */
+    /* max-width: 380px; */
+    /* max-height: 450px; */
+    /* margin: 20px; */
+    /* width: 20%; */
 
     .imgNotAvailable {
-        max-width: 380px;
-        max-height: 300 px;
+        /* max-width: 380px; */
+        /* max-height: 300 px; */
     }
+}
+
+.container-fluid {
+    max-width: 90vw !important;
+}
+
+.maker, .date {
+    font-size: 14px;
+    margin-bottom: 5px;
 }
 
 .image-grid {
@@ -109,8 +118,15 @@ p {
 
 .image-info {
     height: 100px;
+    padding-top: 10px;
+    margin-bottom: 10px;
 }
 
 .currentPage {
     background-color: red;
+}
+
+h4 {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
 }
