@@ -22,6 +22,11 @@ const Paintings = ({
       }
   }
 
+  const handleError = (image => {
+    image.src = notFound;
+    image.style.opacity = 0.4
+  })
+
   if (artworks.length == 0) {
     artObjects = <p>No results to display</p>
   } else {
@@ -33,13 +38,15 @@ const Paintings = ({
         imgObj = (
           <img
           src={painting.primaryimageurl + "?width=400"}
-          onError={(e) => (e.currentTarget.src = notFound)}
+          onError={(e) => (
+            handleError(e.currentTarget)
+          )}
           className="img-fluid"
           alt="painting"
           ></img>
         );
       } else {
-        imgObj = <img src={notFound} className="img-fluid"></img>;
+        imgObj = <img src={notFound} className="img-fluid" style={{opacity: 0.4}}></img>;
       }
       
       artObjects.push(

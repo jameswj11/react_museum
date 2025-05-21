@@ -29,9 +29,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     };
 
     if (content.peoplecount > 0) {
-      data.maker = content.people[0].name
+      data.maker = content.people[0].name;
       if (content.people[0].displaydate) {
-        data.maker += ', ' + content.people[0].displaydate
+        data.maker += ", " + content.people[0].displaydate;
       }
 
       data.birthplace = content.people[0].birthplace;
@@ -55,7 +55,8 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
         modalObj.push(
           <div key={key}>
             <p>
-              <b>{key + ": "}</b>{data[key]}
+              <b>{key + ": "}</b>
+              {data[key]}
             </p>
           </div>
         );
@@ -70,7 +71,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
         <div
           className="additionalImageThumbnail"
           key={index}
-          style={{'backgroundImage': 'url(' + image.baseimageurl + "?width=100" + ')'}}
+          style={{
+            backgroundImage: "url(" + image.baseimageurl + "?width=100" + ")",
+          }}
           onClick={(e) => {
             e.stopPropagation();
             updateImageUrl(image.baseimageurl);
@@ -107,31 +110,33 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           setIsOpen(false);
         }}
       >
-        <div className="modalData">
-          <div className="modalImgContainer">
-            <img
-              className="modalImg"
-              src={content.primaryimageurl}
-              alt={content.title}
-            />
-            <div className="additionalImageContainer">{additionalImages}</div>
-          </div>
-          <div className="modalContentContainer">
-            {modalObj}
-            <button
+        <div className="modalData container">
+          <div className="row">
+            <div className="modalContentContainer col-6">
+              {modalObj}
+              <button
                 type="button"
-              id="saveToFavoritesBtn"
-              className="btn btn-outline-dark btn-saveToFavoritesBtn"
-              onClick={(event) => {
-                handleSetFavorite();
-              }}
-            >
-              {content.favorite == true
-                ? "Remove From Favorites"
-                : "Save To Favorites"}
-            </button>
+                id="saveToFavoritesBtn"
+                className="btn btn-outline-dark btn-saveToFavoritesBtn"
+                onClick={(event) => {
+                  handleSetFavorite();
+                }}
+              >
+                {content.favorite == true
+                  ? "Remove From Favorites"
+                  : "Save To Favorites"}
+              </button>
+            </div>
+            <div className="modalImgContainer col-6">
+              <img
+                className="modalImg"
+                src={content.primaryimageurl}
+                alt={content.title}
+              />
+              <div className="additionalImageContainer">{additionalImages}</div>
+            </div>
+            <button className="closeModalButton">X</button>
           </div>
-          <button className="closeModalButton">X</button>
         </div>
       </div>
     </div>
