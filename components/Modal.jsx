@@ -7,7 +7,8 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   let additionalImages = [];
 
   const modalImageRef = useRef(null);
-  const [imageSrc, setImageSrc] = useState(null);
+  // const [imageSrc, setImageSrc] = useState(null);
+  let imageSrc;
 
   if (isOpen) {
     document.body.classList.add("body-modal-open");
@@ -21,17 +22,10 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     } else {
       var url = notFound;
     }
-    setImageSrc(url)
-  };
 
-  const updateImageUrl = (url, event) => {
-    if (event) {
-      console.log("ref:", modalImageRef);
-      modalImageRef.src = url;
-    } else {
-      console.log("back to normal");
-      modalImageRef.src = content.primaryimageurl;
-    }
+    imageSrc = url;
+
+    modalImageRef.current.src = imageSrc;
   };
 
   if (Object.keys(content).length) {
@@ -87,7 +81,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           }}
           onClick={(event) => {
             event.stopPropagation();
-            setImageSrc(image.baseimageurl);
+            modalImageRef.current.src = image.baseimageurl
           }}
         ></div>
       );
