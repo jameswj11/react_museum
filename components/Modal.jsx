@@ -28,9 +28,10 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       copyright: content.copyright,
     };
 
-    if (content.peoplecount > 0) {
+    if (content.people.length > 0) {
       data.maker = content.people[0].name;
     }
+    
 
     Object.keys(data).forEach((key, index) => {
       if (data[key] == undefined || data[key] == null || data[key] == "") {
@@ -145,7 +146,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
             <div className="modalImgContainer col p-4">
               <img
                 className="modalImg"
-                src={content.primaryimageurl}
+                src={
+                  (content.primaryimageurl) ? content.primaryimageurl : null
+                }
                 alt={content.title}
               />
               <div className="additionalImageContainer">{additionalImages}</div>

@@ -38,15 +38,16 @@ const Paintings = ({
         imgObj = (
           <img
           src={painting.primaryimageurl + "?width=400"}
-          onError={(e) => (
-            handleError(e.currentTarget)
-          )}
+          onError={(e) => {
+            e.currentTarget.src = notFound;
+          }}
           className="img-fluid"
           alt="painting"
           ></img>
         );
       } else {
-        imgObj = <img src={notFound} className="img-fluid" style={{opacity: 0.4}}></img>;
+        painting.primaryimageurl = notFound
+        imgObj = <img src={notFound} className="img-fluid"></img>;
       }
       
       artObjects.push(
