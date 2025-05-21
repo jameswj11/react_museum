@@ -24,16 +24,6 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     setImageSrc(url)
   };
 
-  const updateImageUrl = (url, event) => {
-    if (event) {
-      console.log("ref:", modalImageRef);
-      modalImageRef.src = url;
-    } else {
-      console.log("back to normal");
-      modalImageRef.src = content.primaryimageurl;
-    }
-  };
-
   if (Object.keys(content).length) {
     data = {
       title: content.title,
@@ -128,8 +118,11 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   };
 
   useEffect(() => {
-    cleanUpCss(isOpen);
+    if (modalImageRef) {
+      console.log('here')
+    }
     setUrl()
+    cleanUpCss(isOpen);
   }, [isOpen]);
 
   return (

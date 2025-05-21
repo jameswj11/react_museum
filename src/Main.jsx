@@ -19,6 +19,7 @@ const Main = () => {
   const [content, setContent] = useState({});
   const [selected, setSelected] = useState(false);
   const [searchByFilter, setSearchByFilter] = useState([]);
+  const [numResults, setNumResults] = useState(0)
 
   const numResultsPerPage = 48;
 
@@ -94,16 +95,6 @@ const Main = () => {
 
   const showResults = (response) => {
     console.log("results:", response);
-    
-    // shuffle response records
-    const shuffleArray = (array) => {
-      for (let i = array - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * i + 1);
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-
-      return array;
-    };
 
     // clean up records depending on image URL available
     response.records.forEach((painting) => {
@@ -122,9 +113,14 @@ const Main = () => {
         return 0;
       }
     });
-
+    
+    
     setPaintings(sortedResults);
     setNumPages(response.info.pages);
+    setNumResults(response.info.totalrecords)
+    
+    
+    console.log('TOTAL RECORDS:', numResults)
   };
 
   const showFavorites = (event) => {
@@ -216,8 +212,8 @@ const Main = () => {
         />
         <Paintings
           paintings={paintings}
-          favorites={favorites}
           showFavorite={false}
+          numResults={numResults}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setContent={setContent}
@@ -225,7 +221,7 @@ const Main = () => {
         <Paintings
           paintings={favorites}
           showFavorite={true}
-          favorites={favorites}
+          numResults={numResults}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setContent={setContent}
