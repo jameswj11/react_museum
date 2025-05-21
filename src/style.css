@@ -14,7 +14,7 @@ p {
 
 #searchBar {
     margin-bottom: 20px;
-    max-width: 498px !important;
+    max-width: 475px !important;
 }
 
 .input-group-text:hover {
@@ -59,6 +59,11 @@ p {
     background-position: center;
     background-repeat: no-repeat;
     display: inline-block;
+    overflow-x: scroll;
+}
+
+.additionalImageThumbnail:hover {
+    cursor: pointer;
 }
 
 .modalBG-open {

@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import notFound from "../src/not-found.png";
 
 const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   let modalObj = [];
   let data = {};
   let additionalImages = [];
+
+  const modalImageRef = useRef(null);
+  const [imageSrc, setImageSrc] = useState(null);
 
   if (isOpen) {
     document.body.classList.add("body-modal-open");
@@ -11,8 +15,23 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     document.body.classList.remove("body-modal-open");
   }
 
-  const updateImageUrl = (url) => {
-    document.getElementsByClassName("modalImg")[0].src = url;
+  const setUrl = () => {
+    if (content.primaryimageurl) {
+      var url = content.primaryimageurl
+    } else {
+      var url = notFound;
+    }
+    setImageSrc(url)
+  };
+
+  const updateImageUrl = (url, event) => {
+    if (event) {
+      console.log("ref:", modalImageRef);
+      modalImageRef.src = url;
+    } else {
+      console.log("back to normal");
+      modalImageRef.src = content.primaryimageurl;
+    }
   };
 
   if (Object.keys(content).length) {
@@ -28,10 +47,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       copyright: content.copyright,
     };
 
-    if (content.people.length > 0) {
+    if (content.peoplecount > 0) {
       data.maker = content.people[0].name;
     }
-    
 
     Object.keys(data).forEach((key, index) => {
       if (data[key] == undefined || data[key] == null || data[key] == "") {
@@ -48,10 +66,8 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
         modalObj.push(
           <div key={key} className={"modal-" + key + "Container"}>
             <p className={"modal-" + key + "Text"}>
-              <b>{(key.charAt(0).toUpperCase() + key.slice(1)) + ": "}</b>
-              {
-                (data[key] == '') ? "Unknown or None" : data[key]
-              }
+              <b>{key.charAt(0).toUpperCase() + key.slice(1) + ": "}</b>
+              {data[key] == "" ? "Unknown or None" : data[key]}
             </p>
           </div>
         );
@@ -69,9 +85,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           style={{
             backgroundImage: "url(" + image.baseimageurl + "?width=100" + ")",
           }}
-          onClick={(e) => {
-            e.stopPropagation();
-            updateImageUrl(image.baseimageurl);
+          onClick={(event) => {
+            event.stopPropagation();
+            setImageSrc(image.baseimageurl);
           }}
         ></div>
       );
@@ -102,9 +118,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       document.getElementsByClassName("modal-makerText")
     );
     if (makerText.length) {
-      if (
-        makerText[0].innerHTML == ""
-      ) {
+      if (makerText[0].innerHTML == "") {
         makerText[0].parentElement.style.display = "none";
       } else {
         makerText[0].parentElement.style.display = "inline-block";
@@ -115,6 +129,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
 
   useEffect(() => {
     cleanUpCss(isOpen);
+    setUrl()
   }, [isOpen]);
 
   return (
@@ -145,10 +160,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
             </div>
             <div className="modalImgContainer col p-4">
               <img
+                ref={modalImageRef}
                 className="modalImg"
-                src={
-                  (content.primaryimageurl) ? content.primaryimageurl : null
-                }
+                src={imageSrc}
                 alt={content.title}
               />
               <div className="additionalImageContainer">{additionalImages}</div>
