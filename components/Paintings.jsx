@@ -1,4 +1,4 @@
-import notFound from "./not-found.png";
+import notFound from "../src/not-found.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -39,7 +39,7 @@ const Paintings = ({
           ></img>
         );
       } else {
-        imgObj = <img src={notFound + `?v=${Date.now()}`} className="img-fluid"></img>;
+        imgObj = <img src={notFound} className="img-fluid"></img>;
       }
       
       artObjects.push(

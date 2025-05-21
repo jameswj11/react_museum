@@ -16,7 +16,6 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   };
 
   if (Object.keys(content).length) {
-    console.log(content);
     data = {
       title: content.title,
       date: content.dated,

@@ -13,7 +13,6 @@ const NextPageNav = (props) => {
   }
 
   const handlePageNavClick = (event) => {
-    console.log(event.target.id)
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     if (event.target.id == "prevPageButton") {
         currentPage--
@@ -31,7 +30,6 @@ const NextPageNav = (props) => {
   const checkActivePage = () => {
     const buttons = Array.from(document.getElementsByClassName('pageNavButton'))
 
-    console.log(buttons)
     buttons.forEach((button) => {
         if (currentPage == button.innerHTML) {
             button.classList.add('active')

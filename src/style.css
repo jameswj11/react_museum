@@ -1,5 +1,3 @@
-
-
 .body-modal-open {
     overflow: hidden;
 }
@@ -109,10 +107,6 @@ p {
     overflow-y: scroll;
 }
 
-.filterOptionContainer-show {
-    /* display: '' !important */
-}
-
 .filterOptionContainer-hide {
     display: none !important
 }
@@ -160,30 +154,15 @@ p {
     height: 100%;
     float: left;
     text-align: left;
-    /* padding: 5px; */
 }
 
 .modalImg {
-    /* width: 40%; */
     position: relative;
     max-width: 100%;
     max-height: 90%;
     top: 0;
     left: 0;
-}
-
-.collectionObject {
-    /* display: inline-block; */
-    /* max-width: 380px; */
-    /* max-height: 450px; */
-    /* margin: 20px; */
-    /* width: 20%; */
-
-    .imgNotAvailable {
-        /* max-width: 380px; */
-        /* max-height: 300 px; */
-    }
-}
+} 
 
 .filterByContainer {
     margin-bottom: 20px !important;
@@ -191,7 +170,6 @@ p {
 
 .container-fluid {
     max-width: 90vw !important;
-    /* margin-top: 10px !important; */
 }
 
 .lineSeparator {
