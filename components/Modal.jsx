@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   let modalObj = [];
@@ -16,12 +16,11 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   };
 
   if (Object.keys(content).length) {
-    console.log(content);
     data = {
       title: content.title,
-      date: content.dated,
       maker: "",
       culture: content.culture,
+      date: content.dated,
       labeltext: content.labeltext,
       classification: content.classification,
       creditline: content.creditline,
@@ -29,34 +28,30 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       copyright: content.copyright,
     };
 
-    if (content.peoplecount > 0) {
-      data.maker = content.people[0].name
-      if (content.people[0].displaydate) {
-        data.maker += ', ' + content.people[0].displaydate
-      }
-
-      data.birthplace = content.people[0].birthplace;
-      data.deathplace = content.people[0].deathplace;
+    if (content.people.length > 0) {
+      data.maker = content.people[0].name;
     }
-
-    Object.keys(data).forEach((key) => {
-      if (data[key] == null || data[key] == "") {
-        data[key] = "";
-      }
-    });
+    
 
     Object.keys(data).forEach((key, index) => {
+      if (data[key] == undefined || data[key] == null || data[key] == "") {
+        data[key] = "";
+      }
+
       if (index < 5) {
         modalObj.push(
-          <div key={key}>
-            <p>{data[key]}</p>
+          <div key={key} className={"modal-" + key + "Container"}>
+            <p className={"modal-" + key + "Text"}>{data[key]}</p>
           </div>
         );
       } else {
         modalObj.push(
-          <div key={key}>
-            <p>
-              <b>{key + ": "}</b>{data[key]}
+          <div key={key} className={"modal-" + key + "Container"}>
+            <p className={"modal-" + key + "Text"}>
+              <b>{(key.charAt(0).toUpperCase() + key.slice(1)) + ": "}</b>
+              {
+                (data[key] == '') ? "Unknown or None" : data[key]
+              }
             </p>
           </div>
         );
@@ -71,7 +66,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
         <div
           className="additionalImageThumbnail"
           key={index}
-          style={{'background-image': 'url(' + image.baseimageurl + "?width=100" + ')'}}
+          style={{
+            backgroundImage: "url(" + image.baseimageurl + "?width=100" + ")",
+          }}
           onClick={(e) => {
             e.stopPropagation();
             updateImageUrl(image.baseimageurl);
@@ -99,6 +96,27 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     setFavorites(newFavorites);
   };
 
+  // clean up css if maker is blank
+  const cleanUpCss = () => {
+    const makerText = Array.from(
+      document.getElementsByClassName("modal-makerText")
+    );
+    if (makerText.length) {
+      if (
+        makerText[0].innerHTML == ""
+      ) {
+        makerText[0].parentElement.style.display = "none";
+      } else {
+        makerText[0].parentElement.style.display = "inline-block";
+        makerText[0].style.marginRight = "10px";
+      }
+    }
+  };
+
+  useEffect(() => {
+    cleanUpCss(isOpen);
+  }, [isOpen]);
+
   return (
     <div>
       <div
@@ -108,30 +126,35 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           setIsOpen(false);
         }}
       >
-        <div className="modalData">
-          <div className="modalImgContainer">
-            <img
-              className="modalImg"
-              src={content.primaryimageurl}
-              alt={content.title}
-            />
-            <div className="additionalImageContainer">{additionalImages}</div>
+        <div className="modalData container">
+          <div className="row">
+            <div className="modalContentContainer col p-4">
+              {modalObj}
+              <button
+                type="button"
+                id="saveToFavoritesBtn"
+                className="btn btn-outline-dark btn-saveToFavoritesBtn"
+                onClick={(event) => {
+                  handleSetFavorite();
+                }}
+              >
+                {content.favorite == true
+                  ? "Remove From Favorites"
+                  : "Save To Favorites"}
+              </button>
+            </div>
+            <div className="modalImgContainer col p-4">
+              <img
+                className="modalImg"
+                src={
+                  (content.primaryimageurl) ? content.primaryimageurl : null
+                }
+                alt={content.title}
+              />
+              <div className="additionalImageContainer">{additionalImages}</div>
+            </div>
+            <button className="closeModalButton">X</button>
           </div>
-          <div className="modalContentContainer">
-            {modalObj}
-            <button
-              id="saveToFavoritesBtn"
-              className="saveToFavoritesBtn"
-              onClick={(event) => {
-                handleSetFavorite();
-              }}
-            >
-              {content.favorite == true
-                ? "Remove From Favorites"
-                : "Save To Favorites"}
-            </button>
-          </div>
-          <button className="closeModalButton">X</button>
         </div>
       </div>
     </div>

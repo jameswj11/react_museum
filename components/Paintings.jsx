@@ -1,6 +1,5 @@
-import notFound from "./not-found.png";
+import notFound from "../src/not-found.png";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -16,61 +15,72 @@ const Paintings = ({
 
   let artworks = paintings;
 
-  artworks.forEach((painting) => {
-    let url = "";
-    let imgObj;
+  const handleMouseClick = (painting)=> {
+      if (!isOpen) {
+        setContent(painting);
+        setIsOpen(true);
+      }
+  }
 
-    if (painting.primaryimageurl) {
-      imgObj = (
-        <img
-          src={painting.primaryimageurl + "?width=350"}
-          onError={(e) => (e.currentTarget.src = notFound)}
+  const handleError = (image => {
+    image.src = notFound;
+    image.style.opacity = 0.4
+  })
+
+  if (artworks.length == 0) {
+    artObjects = <p>No results to display</p>
+  } else {
+    artworks.forEach((painting) => {
+      let url = "";
+      let imgObj;
+      
+      if (painting.primaryimageurl) {
+        imgObj = (
+          <img
+          src={painting.primaryimageurl + "?width=400"}
+          onError={(e) => {
+            e.currentTarget.src = notFound;
+          }}
           className="img-fluid"
           alt="painting"
-        ></img>
-      );
-    } else {
-      imgObj = <img src={notFound} className="img-fluid"></img>;
-    }
-
-    artObjects.push(
-      <Col
+          ></img>
+        );
+      } else {
+        painting.primaryimageurl = notFound
+        imgObj = <img src={notFound} className="img-fluid"></img>;
+      }
+      
+      artObjects.push(
+        <Col
+        sm={6}
         xl={4}
         xxl={3}
-        sm={6}
-        className="collectionObject"
+        className="collectionObject gy-5"
         key={painting.id}
-        onClick={(event) => {
-          if (!isOpen) {
-            setContent(painting);
-            setIsOpen(true);
-          }
-        }}
-      >
-        <div className="imageWrapper">
+        >
+        <div className="imageWrapper" onClick={()=> {handleMouseClick(painting)}}>
           <span className="align-helper"></span>
           {imgObj}
         </div>
         <div className="image-info">
-          <h4>{painting.title}</h4>
+          <b className="title" onClick={()=> {handleMouseClick(painting)}}>{painting.title}</b>
           {painting.people ? <p className="maker">{painting.people[0].name} </p> : null}
           {painting.dated ? <p className="date">{painting.dated}</p> : <br />}
         </div>
       </Col>
     );
   });
+}
 
   return (
-    <Container fluid>
       <Row
-      className="gy-5"
+        className="resultsGridRow"
         id={showFavorite ? "favoriteGrid" : "resultsGrid"}
         style={showFavorite ? { display: "none" } : { display: "" }}
       >
-        <h2>{showFavorite ? "Favorites" : "Search Results"}</h2>
+        <b className="showingResultsText">{showFavorite ? "Showing Favorites" : "Showing Results"}</b>
         {artObjects}
       </Row>
-    </Container>
   );
 };
 

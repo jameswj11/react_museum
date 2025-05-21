@@ -5,8 +5,7 @@ import Paintings from "../components/Paintings.jsx";
 import NextPageNav from "../components/NextPageNav.jsx";
 import Filter from "../components/Filter.jsx";
 import Modal from "../components/Modal.jsx";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Main = () => {
   console.log("main loaded");
@@ -25,7 +24,7 @@ const Main = () => {
 
   const searchPaintings = async (searchValue, currentPage, searchByFilter) => {
     const url = "https://api.harvardartmuseums.org/object?";
-    // console.log('searchPaintings', searchByFilter)
+
     const params = {
       apikey: process.env.API_KEY,
       q: searchValue,
@@ -38,8 +37,8 @@ const Main = () => {
 
     if (searchByFilter.length > 0) {
       for (let i = 0; i < searchByFilter.length; i++) {
-        let key = Object.keys(searchByFilter[i])[0]
-        params[key] = searchByFilter[i][key]
+        let key = Object.keys(searchByFilter[i])[0];
+        params[key] = searchByFilter[i][key];
       }
     }
 
@@ -91,11 +90,11 @@ const Main = () => {
     });
 
     setStartFilters(returnObj);
-    console.log('start filters from main:', startFilters)
   };
 
   const showResults = (response) => {
-    console.log('results:', response)
+    console.log("results:", response);
+    
     // shuffle response records
     const shuffleArray = (array) => {
       for (let i = array - 1; i > 0; i--) {
@@ -132,18 +131,21 @@ const Main = () => {
     // to be fixed later and handled in component
     const faves = document.getElementById("favoriteGrid");
     const results = document.getElementById("resultsGrid");
-    const pageNav = document.getElementById("pageNav")
+    const pageNav = document.getElementById("pageNav");
+    const viewText = document.getElementById("viewFavoritesText")
 
     if (faves.style.display == "none") {
       faves.style.display = "";
       results.style.display = "none";
       pageNav.style.display = "none";
-      event.target.innerHTML = "Back to Results"
+      viewText.innerHTML = "Show Search Results"
+      event.target.innerHTML = "Show Search";
     } else {
       faves.style.display = "none";
       results.style.display = "";
-      pageNav.style.display = ""
-      event.target.innerHTML = "View Favorites"
+      pageNav.style.display = "";
+      event.target.innerHTML = "Show Favorites";
+      viewText.innerHTML = "Show Favorites"
     }
   };
 
@@ -152,65 +154,90 @@ const Main = () => {
     searchFields([]);
   }, [searchValue, currentPage, searchByFilter]);
 
-  const setSelectOption = (output)=> {
-    let newSearchOptions = [...searchByFilter, {[Object.keys(output)[0]] : output[Object.keys(output)[0]]}];
-    
-    setSearchByFilter(newSearchOptions)
+  const setSelectOption = (output) => {
+    let newSearchOptions = [
+      ...searchByFilter,
+      { [Object.keys(output)[0]]: output[Object.keys(output)[0]] },
+    ];
+
+    setSearchByFilter(newSearchOptions);
 
     if (newSearchOptions.length > 0) {
-      setSelected(true)
+      setSelected(true);
     } else {
-      setSelected(false)
+      setSelected(false);
     }
-  }
+  };
 
   return (
     <div>
-      <h1>Explore the Harvard Museums</h1>
-      <Search
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-        setCurrentPage={setCurrentPage}
-      />
-      <Filter
-        startFilters={startFilters}
-        setSelectOption={setSelectOption}
-        searchValue={searchValue}
-        selected={selected}
-        paintings={paintings}
-      />
-      <button className="view-favorites-button" onClick={showFavorites}>
-        View Favorites
-      </button>
-      <Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        content={content}
-        favorites={favorites}
-        setFavorites={setFavorites}
-      />
-      <Paintings
-        paintings={paintings}
-        favorites={favorites}
-        showFavorite={false}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        setContent={setContent}
-      />
-      <Paintings 
-      paintings={favorites} 
-      showFavorite={true} 
-      favorites={favorites}
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      setContent={setContent}/>
-      <NextPageNav
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        numPages={numPages}
-        paintings={paintings}
-        favorites={favorites}
-      />
+      <div className="container-fluid">
+        <div className="row header">
+          <h1>Explore the Harvard Museums</h1>
+        </div>
+        <div className="row searchContainer">
+          <h4 className="searchTheCollection">Search the Collection</h4>
+          <Search
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+        <Filter
+          startFilters={startFilters}
+          setSelectOption={setSelectOption}
+          searchValue={searchValue}
+          selected={selected}
+          paintings={paintings}
+        />
+        <div className="row favoritesContainer">
+          <div className="col">
+            <h4 className="" id="viewFavoritesText">View Your Favorites</h4>
+            <button
+              type="button"
+              className="btn btn-outline-secondary view-favorites-button"
+              onClick={showFavorites}
+            >
+              Show Favorites
+            </button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <div className="lineSeparator"></div>
+          </div>
+        </div>
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          content={content}
+          favorites={favorites}
+          setFavorites={setFavorites}
+        />
+        <Paintings
+          paintings={paintings}
+          favorites={favorites}
+          showFavorite={false}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setContent={setContent}
+        />
+        <Paintings
+          paintings={favorites}
+          showFavorite={true}
+          favorites={favorites}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setContent={setContent}
+        />
+        <NextPageNav
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          numPages={numPages}
+          paintings={paintings}
+          favorites={favorites}
+        />
+      </div>
     </div>
   );
 };
