@@ -7,24 +7,43 @@ const ReactFilter = ({
   searchValue,
   paintings,
   selected,
+  searchByFilter
 }) => {
   let centuries = [];
   let classifications = [];
   let cultures = [];
+  let noFilter = true;
 
-  if (startFilters.century) {
-    Object.keys(startFilters.century).forEach((key) => {
-      centuries.push({ value: key, label: key });
-    });
 
-    Object.keys(startFilters.classification).forEach((key) => {
-      classifications.push({ value: key, label: key });
-    });
+  searchByFilter.forEach(filter => {
+    if (filter[Object.keys(filter)[0]] == '') {
+      noFilter = true;
+    } else {
+      noFilter = false;
+    }
+  })
 
-    Object.keys(startFilters.culture).forEach((key) => {
-      cultures.push({ value: key, label: key });
-    });
+  const setNewFilters = () => {
+    if (startFilters.century) {
+      Object.keys(startFilters.century).forEach((key) => {
+        centuries.push({ value: key, label: key });
+      });
+  
+      Object.keys(startFilters.classification).forEach((key) => {
+        classifications.push({ value: key, label: key });
+      });
+  
+      Object.keys(startFilters.culture).forEach((key) => {
+        cultures.push({ value: key, label: key });
+      });
+    }
   }
+
+  if (noFilter && (searchValue.trim() == '' || searchValue == undefined)) {
+    // default to starting filters
+    setNewFilters()
+  }
+
 
   const setFilters = (paintings) => {
     centuries = [];
@@ -59,15 +78,14 @@ const ReactFilter = ({
 
     return returnObj;
   };
+
   let newFilters = {};
-  if (searchValue || selected) {
+  if (searchValue.trim() != '' || noFilter == false) {
     newFilters = setFilters(paintings);
-
-    centuries = newFilters.centuries;
-    cultures = newFilters.cultures;
-    classifications = newFilters.classifications;
+  } else if (searchValue.trim() == '' && noFilter == true) {
+    setNewFilters()
   }
-
+  
   const handleFilterChange = (type, event) => {
     if (event == null) {
       setSelectOption({ [type]: "" });
@@ -94,9 +112,11 @@ const ReactFilter = ({
     }
   };
 
-  centuries.reverse();
-  classifications.sort((a, b) => a.value.localeCompare(b.value));
-  cultures.sort((a, b) => a.value.localeCompare(b.value));
+  if (centuries) {
+    centuries.reverse();
+    classifications.sort((a, b) => a.value.localeCompare(b.value));
+    cultures.sort((a, b) => a.value.localeCompare(b.value));
+  }
 
   const filterIcon = Array.from(
     document.getElementsByClassName("toggleFiltersIcon")
@@ -169,7 +189,6 @@ const ReactFilter = ({
       >
         <div className="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 filterSelect">
           <Select
-            // className="filterSelect"
             defaultValue={null}
             isClearable
             isSearchable
@@ -182,7 +201,6 @@ const ReactFilter = ({
         </div>
         <div className="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 filterSelect">
           <Select
-            // className="filterSelect"
             defaultValue={null}
             isClearable
             isSearchable
@@ -195,7 +213,6 @@ const ReactFilter = ({
         </div>
         <div className="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 filterSelect">
           <Select
-            // className="filterSelect"
             defaultValue={null}
             isClearable
             isSearchable

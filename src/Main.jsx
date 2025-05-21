@@ -120,7 +120,7 @@ const Main = () => {
     setNumResults(response.info.totalrecords)
     
     
-    console.log('TOTAL RECORDS:', numResults)
+    console.log('TOTAL RECORDS:', response.info.totalrecords)
   };
 
   const showFavorites = (event) => {
@@ -151,13 +151,20 @@ const Main = () => {
   }, [searchValue, currentPage, searchByFilter]);
 
   const setSelectOption = (output) => {
-    let newSearchOptions = [
-      ...searchByFilter,
-      { [Object.keys(output)[0]]: output[Object.keys(output)[0]] },
-    ];
+    let newSearchOptions = [...searchByFilter];
+
+    if (newSearchOptions.some(filter => Object.keys(filter).includes(Object.keys(output)[0]))) {
+      newSearchOptions.forEach((option) => {
+        if ([Object.keys(option)[0]] == Object.keys(output)[0]) {
+          option[Object.keys(option)[0]] = output[Object.keys(output)[0]];
+        }
+      })
+    } else {
+      newSearchOptions.push({[Object.keys(output)[0]]: output[Object.keys(output)[0]]})
+    }
 
     setSearchByFilter(newSearchOptions);
-
+    
     if (newSearchOptions.length > 0) {
       setSelected(true);
     } else {
@@ -185,6 +192,7 @@ const Main = () => {
           searchValue={searchValue}
           selected={selected}
           paintings={paintings}
+          searchByFilter={searchByFilter}
         />
         <div className="row favoritesContainer">
           <div className="col">
