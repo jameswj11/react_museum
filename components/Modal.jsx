@@ -7,7 +7,8 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   let additionalImages = [];
 
   const modalImageRef = useRef(null);
-  const [imageSrc, setImageSrc] = useState(null);
+  // const [imageSrc, setImageSrc] = useState(null);
+  let imageSrc;
 
   if (isOpen) {
     document.body.classList.add("body-modal-open");
@@ -21,9 +22,11 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     } else {
       var url = notFound;
     }
-    setImageSrc(url)
-  };
 
+    imageSrc = url;
+
+    modalImageRef.current.src = imageSrc;
+  };
   if (Object.keys(content).length) {
     data = {
       title: content.title,
@@ -77,7 +80,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           }}
           onClick={(event) => {
             event.stopPropagation();
-            setImageSrc(image.baseimageurl);
+            modalImageRef.current.src = image.baseimageurl
           }}
         ></div>
       );
@@ -136,7 +139,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       >
         <div className="modalData container">
           <div className="row">
-            <div className="modalContentContainer col p-4">
+            <div className="modalContentContainer col p-5">
               {modalObj}
               <button
                 type="button"
@@ -151,7 +154,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
                   : "Save To Favorites"}
               </button>
             </div>
-            <div className="modalImgContainer col p-4">
+            <div className="modalImgContainer col p-5">
               <img
                 ref={modalImageRef}
                 className="modalImg"
