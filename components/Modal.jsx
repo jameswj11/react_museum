@@ -137,7 +137,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       >
         <div className="modalData container">
           <div className="row">
-            <div className="modalContentContainer col p-4">
+            <div className="modalContentContainer col p-5">
               {modalObj}
               <button
                 type="button"
@@ -152,7 +152,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
                   : "Save To Favorites"}
               </button>
             </div>
-            <div className="modalImgContainer col p-4">
+            <div className="modalImgContainer col p-5">
               <img
                 ref={modalImageRef}
                 className="modalImg"
