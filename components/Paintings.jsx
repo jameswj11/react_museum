@@ -32,7 +32,7 @@ const Paintings = ({
       if (painting.primaryimageurl) {
         imgObj = (
           <img
-          src={painting.primaryimageurl + "?width=350"}
+          src={painting.primaryimageurl + "?width=400"}
           onError={(e) => (e.currentTarget.src = notFound)}
           className="img-fluid"
           alt="painting"
@@ -44,9 +44,9 @@ const Paintings = ({
       
       artObjects.push(
         <Col
+        sm={6}
         xl={4}
         xxl={3}
-        sm={6}
         className="collectionObject gy-5"
         key={painting.id}
         >

@@ -24,7 +24,7 @@ const Main = () => {
 
   const searchPaintings = async (searchValue, currentPage, searchByFilter) => {
     const url = "https://api.harvardartmuseums.org/object?";
-    // console.log('searchPaintings', searchByFilter)
+
     const params = {
       apikey: process.env.API_KEY,
       q: searchValue,
@@ -90,11 +90,11 @@ const Main = () => {
     });
 
     setStartFilters(returnObj);
-    console.log("start filters from main:", startFilters);
   };
 
   const showResults = (response) => {
     console.log("results:", response);
+    
     // shuffle response records
     const shuffleArray = (array) => {
       for (let i = array - 1; i > 0; i--) {
@@ -175,7 +175,7 @@ const Main = () => {
         <div className="row header">
           <h1>Explore the Harvard Museums</h1>
         </div>
-        <div className="row">
+        <div className="row searchContainer">
           <h4 className="searchTheCollection">Search the Collection</h4>
           <Search
             searchValue={searchValue}
@@ -190,8 +190,8 @@ const Main = () => {
           selected={selected}
           paintings={paintings}
         />
-        <div className="row">
-          <div className="col-2">
+        <div className="row favoritesContainer">
+          <div className="col">
             <h4 className="" id="viewFavoritesText">View Your Favorites</h4>
             <button
               type="button"

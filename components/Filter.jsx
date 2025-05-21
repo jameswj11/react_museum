@@ -54,6 +54,7 @@ const ReactFilter = ({
       classifications: classifications,
       cultures: cultures,
     };
+
     return returnObj;
   };
   let newFilters = {};
@@ -65,7 +66,7 @@ const ReactFilter = ({
     classifications = newFilters.classifications;
   }
 
-  const testFunc = (type, event) => {
+  const handleFilterChange = (type, event) => {
     if (event == null) {
       setSelectOption({ [type]: "" });
     } else {
@@ -73,46 +74,138 @@ const ReactFilter = ({
     }
   };
 
+  const toggleFilters = (event) => {
+    const chevronUp = document.getElementById("chevronUp");
+    const chevronDown = document.getElementById("chevronDown");
+
+    const filterOptionContainer = document.getElementById(
+      "filterOptionContainer"
+    );
+    if (filterOptionContainer.className == "row filterOptionContainer-show") {
+      filterOptionContainer.className = "row filterOptionContainer-hide";
+      chevronDown.style.display = "none";
+      chevronUp.style.display = "initial";
+    } else {
+      filterOptionContainer.className = "row filterOptionContainer-show";
+      chevronUp.style.display = "none";
+      chevronDown.style.display = "initial";
+    }
+  };
+
+  centuries.reverse();
+  classifications.sort((a, b) => a.value.localeCompare(b.value));
+  cultures.sort((a, b) => a.value.localeCompare(b.value));
+
+  const filterIcon = Array.from(
+    document.getElementsByClassName("toggleFiltersIcon")
+  );
+
+  const filterText = Array.from(
+    document.getElementsByClassName("filterByText")
+  );
+
+  if (filterIcon.length) {
+    filterIcon[0].addEventListener("mouseover", (event) => {
+      filterText[0].style.textDecoration = "underline";
+    });
+
+    filterIcon[0].addEventListener("mouseout", (event) => {
+      filterText[0].style.textDecoration = "none";
+    })
+  }
+
   return (
-      <div className="row filterBy">
-        <h4 className="filterByText">Filter By</h4>
-        <div className="col">
+    <div className="filterByContainer">
+      <div className="row">
+        <h4
+          className="filterByText col-6"
+          onClick={(event) => {
+            toggleFilters(event);
+          }}
+        >
+          Filter By
+        </h4>
+        <div
+          className="col-6 toggleFiltersIcon"
+          onClick={(event) => {
+            toggleFilters(event);
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            fill="currentColor"
+            id="chevronDown"
+            className="chevron chevron-show"
+            viewBox="0 4 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            id="chevronUp"
+            fill="currentColor"
+            class="chevron chevron-hide"
+            viewBox="0 4 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        className="row filterOptionContainer-show"
+        id="filterOptionContainer"
+      >
+        <div className="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 filterSelect">
           <Select
+            // className="filterSelect"
             defaultValue={null}
             isClearable
             isSearchable
             placeholder={"Century / Millennium"}
             onChange={(event) => {
-              testFunc("century", event);
+              handleFilterChange("century", event);
             }}
             options={centuries}
           />
         </div>
-        <div className="col">
+        <div className="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 filterSelect">
           <Select
+            // className="filterSelect"
             defaultValue={null}
             isClearable
             isSearchable
             placeholder={"Culture / Country"}
             onChange={(event) => {
-              testFunc("culture", event);
+              handleFilterChange("culture", event);
             }}
             options={cultures}
           />
         </div>
-        <div className="col">
+        <div className="col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 filterSelect">
           <Select
+            // className="filterSelect"
             defaultValue={null}
             isClearable
             isSearchable
             placeholder={"Object Type / Material"}
             onChange={(event) => {
-              testFunc("classification", event);
+              handleFilterChange("classification", event);
             }}
             options={classifications}
           />
         </div>
       </div>
+    </div>
   );
 };
 
