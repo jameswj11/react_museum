@@ -32,20 +32,22 @@ const ReactFilter = ({
     cultures = [];
 
     paintings.forEach((painting) => {
-      if (centuries.some((obj) => obj.value == painting.century) == false) {
-        centuries.push({ value: painting.century, label: painting.century });
-      }
-      if (cultures.some((obj) => obj.value == painting.culture) == false) {
-        cultures.push({ value: painting.culture, label: painting.culture });
-      }
-      if (
-        classifications.some((obj) => obj.value == painting.classification) ==
-        false
-      ) {
-        classifications.push({
-          value: painting.classification,
-          label: painting.classification,
-        });
+      if (painting.century && painting.culture) {
+        if (centuries.some((obj) => obj.value == painting.century) == false) {
+          centuries.push({ value: painting.century, label: painting.century });
+        }
+        if (cultures.some((obj) => obj.value == painting.culture) == false) {
+          cultures.push({ value: painting.culture, label: painting.culture });
+        }
+        if (
+          classifications.some((obj) => obj.value == painting.classification) ==
+          false
+        ) {
+          classifications.push({
+            value: painting.classification,
+            label: painting.classification,
+          });
+        }
       }
     });
 
