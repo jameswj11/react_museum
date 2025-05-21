@@ -164,7 +164,7 @@ const Main = () => {
     }
 
     setSearchByFilter(newSearchOptions);
-    
+
     if (newSearchOptions.length > 0) {
       setSelected(true);
     } else {
@@ -220,6 +220,7 @@ const Main = () => {
         />
         <Paintings
           paintings={paintings}
+          favorites={favorites}
           showFavorite={false}
           numResults={numResults}
           isOpen={isOpen}
@@ -228,6 +229,7 @@ const Main = () => {
         />
         <Paintings
           paintings={favorites}
+          favorites={favorites}
           showFavorite={true}
           numResults={numResults}
           isOpen={isOpen}

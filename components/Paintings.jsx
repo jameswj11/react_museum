@@ -78,7 +78,7 @@ const Paintings = ({
         id={showFavorite ? "favoriteGrid" : "resultsGrid"}
         style={showFavorite ? { display: "none" } : { display: "" }}
       >
-        <b className="showingResultsText">{showFavorite ? "Showing " + numResults + " Favorites" : "Showing " + numResults + " Results"}</b>
+        <b className="showingResultsText">{showFavorite ? "Showing " + paintings.length + " Favorites" : "Showing " + numResults + " Results"}</b>
         {artObjects}
       </Row>
   );
