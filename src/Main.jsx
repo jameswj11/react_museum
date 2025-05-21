@@ -19,6 +19,7 @@ const Main = () => {
   const [content, setContent] = useState({});
   const [selected, setSelected] = useState(false);
   const [searchByFilter, setSearchByFilter] = useState([]);
+  const [numResults, setNumResults] = useState(0)
 
   const numResultsPerPage = 48;
 
@@ -94,16 +95,6 @@ const Main = () => {
 
   const showResults = (response) => {
     console.log("results:", response);
-    
-    // shuffle response records
-    const shuffleArray = (array) => {
-      for (let i = array - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * i + 1);
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-
-      return array;
-    };
 
     // clean up records depending on image URL available
     response.records.forEach((painting) => {
@@ -122,9 +113,14 @@ const Main = () => {
         return 0;
       }
     });
-
+    
+    
     setPaintings(sortedResults);
     setNumPages(response.info.pages);
+    setNumResults(response.info.totalrecords)
+    
+    
+    console.log('TOTAL RECORDS:', response.info.totalrecords)
   };
 
   const showFavorites = (event) => {
@@ -155,10 +151,17 @@ const Main = () => {
   }, [searchValue, currentPage, searchByFilter]);
 
   const setSelectOption = (output) => {
-    let newSearchOptions = [
-      ...searchByFilter,
-      { [Object.keys(output)[0]]: output[Object.keys(output)[0]] },
-    ];
+    let newSearchOptions = [...searchByFilter];
+
+    if (newSearchOptions.some(filter => Object.keys(filter).includes(Object.keys(output)[0]))) {
+      newSearchOptions.forEach((option) => {
+        if ([Object.keys(option)[0]] == Object.keys(output)[0]) {
+          option[Object.keys(option)[0]] = output[Object.keys(output)[0]];
+        }
+      })
+    } else {
+      newSearchOptions.push({[Object.keys(output)[0]]: output[Object.keys(output)[0]]})
+    }
 
     setSearchByFilter(newSearchOptions);
 
@@ -189,6 +192,7 @@ const Main = () => {
           searchValue={searchValue}
           selected={selected}
           paintings={paintings}
+          searchByFilter={searchByFilter}
         />
         <div className="row favoritesContainer">
           <div className="col">
@@ -218,14 +222,16 @@ const Main = () => {
           paintings={paintings}
           favorites={favorites}
           showFavorite={false}
+          numResults={numResults}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setContent={setContent}
         />
         <Paintings
           paintings={favorites}
-          showFavorite={true}
           favorites={favorites}
+          showFavorite={true}
+          numResults={numResults}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           setContent={setContent}

@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 const Paintings = ({
   paintings,
   showFavorite,
-  favorites,
+  numResults,
   isOpen,
   setIsOpen,
   setContent,
@@ -78,7 +78,7 @@ const Paintings = ({
         id={showFavorite ? "favoriteGrid" : "resultsGrid"}
         style={showFavorite ? { display: "none" } : { display: "" }}
       >
-        <b className="showingResultsText">{showFavorite ? "Showing Favorites" : "Showing Results"}</b>
+        <b className="showingResultsText">{showFavorite ? "Showing " + paintings.length + " Favorites" : "Showing " + numResults + " Results"}</b>
         {artObjects}
       </Row>
   );

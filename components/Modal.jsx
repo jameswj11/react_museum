@@ -27,7 +27,6 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
 
     modalImageRef.current.src = imageSrc;
   };
-
   if (Object.keys(content).length) {
     data = {
       title: content.title,
@@ -122,8 +121,11 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   };
 
   useEffect(() => {
-    cleanUpCss(isOpen);
+    if (modalImageRef) {
+      console.log('here')
+    }
     setUrl()
+    cleanUpCss(isOpen);
   }, [isOpen]);
 
   return (
