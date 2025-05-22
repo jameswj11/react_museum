@@ -51,7 +51,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           <div key={key} className={"modal-" + key + "Container"}>
             <p className={"modal-" + key + "Text"}>
               <b>{key.charAt(0).toUpperCase() + key.slice(1) + ": "}</b>
-              <a href={data[key]}>{data[key]}</a>
+              <a href={data[key]} target="_blank">{data[key]}</a>
             </p>
           </div>
         );
