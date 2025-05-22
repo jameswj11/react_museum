@@ -14,6 +14,8 @@ const Paintings = ({
   let artObjects = [];
 
   let artworks = paintings;
+  let favoriteText;
+  let resultsText;
 
   const handleMouseClick = (painting)=> {
       if (!isOpen) {
@@ -72,13 +74,21 @@ const Paintings = ({
   });
 }
 
+if (paintings.length == 1) {
+  resultsText = ' Result'
+  favoriteText = ' Favorite'
+} else {
+  resultsText =  ' Results'
+  favoriteText = ' Favorites'
+}
+
   return (
       <Row
         className="resultsGridRow"
         id={showFavorite ? "favoriteGrid" : "resultsGrid"}
         style={showFavorite ? { display: "none" } : { display: "" }}
       >
-        <b className="showingResultsText">{showFavorite ? "Showing " + paintings.length + " Favorites" : "Showing " + numResults + " Results"}</b>
+        <b className="showingResultsText">{showFavorite ? "Showing " + paintings.length + favoriteText : "Showing " + numResults + resultsText}</b>
         {artObjects}
       </Row>
   );

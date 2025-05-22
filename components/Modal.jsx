@@ -122,9 +122,6 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   };
 
   useEffect(() => {
-    if (modalImageRef) {
-      console.log('here')
-    }
     setUrl()
     cleanUpCss(isOpen);
     modalRef.current.scrollTop = 0;
