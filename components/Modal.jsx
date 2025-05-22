@@ -40,6 +40,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       creditline: content.creditline,
       provenance: content.provenance,
       copyright: content.copyright,
+      link: content.url
     };
 
     if (content.peoplecount > 0) {
@@ -57,6 +58,15 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
             <p className={"modal-" + key + "Text"}>{data[key]}</p>
           </div>
         );
+      } else if (key == 'link') {
+        modalObj.push(
+          <div key={key} className={"modal-" + key + "Container"}>
+            <p className={"modal-" + key + "Text"}>
+              <b>{key.charAt(0).toUpperCase() + key.slice(1) + ": "}</b>
+              <a href={data[key]}>{data[key]}</a>
+            </p>
+          </div>
+        )
       } else {
         modalObj.push(
           <div key={key} className={"modal-" + key + "Container"}>
