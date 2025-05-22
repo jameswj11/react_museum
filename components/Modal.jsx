@@ -116,15 +116,20 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     modalRef.current.scrollTop = 0;
     if (isOpen == false) {
       if (imageGalleryContainer.current.imageGallery.current) {
-        imageGalleryContainer.current.imageGallery.current.style.display = 'none';
+        imageGalleryContainer.current.imageGallery.current.style.display =
+          "none";
+      }
+    } else {
+      if (imageGalleryContainer.current.imageGallery.current) {
+        imageGalleryContainer.current.imageGallery.current.style.display =
+          "initial";
       }
     }
   }, [isOpen]);
 
   const imageLoaded = (e) => {
-    if (imageGalleryContainer.current.imageGallery.current) {
-      imageGalleryContainer.current.imageGallery.current.style.display = "initial";
-    }
+    imageGalleryContainer.current.imageGallery.current.style.display =
+      "initial";
   };
 
   return (
@@ -138,9 +143,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       >
         <div className="modalData container" ref={modalRef}>
           <div className="row">
-            <div
-              className="modalImgContainer col p-5"
-            >
+            <div className="modalImgContainer col p-5">
               <ImageGallery
                 ref={imageGalleryContainer}
                 items={additionalImages}
