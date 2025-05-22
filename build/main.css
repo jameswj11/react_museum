@@ -1,10 +1,9 @@
-.body-modal-open {
-    overflow: hidden;
+p {
+    color: #333333;
 }
 
-p {
-    margin-top: 10px;
-    margin-bottom: 0px;
+.body-modal-open {
+    overflow: hidden;
 }
 
 .view-favorites-button {
@@ -15,7 +14,7 @@ p {
 
 #searchBar {
     margin-bottom: 20px;
-    max-width: 498px !important;
+    max-width: 475px !important;
 }
 
 .input-group-text:hover {
@@ -60,6 +59,11 @@ p {
     background-position: center;
     background-repeat: no-repeat;
     display: inline-block;
+    overflow-x: scroll;
+}
+
+.additionalImageThumbnail:hover {
+    cursor: pointer;
 }
 
 .modalBG-open {
@@ -150,10 +154,39 @@ p {
 }
 
 .modalContentContainer {
-    width: 50%;
-    height: 100%;
-    float: left;
     text-align: left;
+
+    .modal-titleText {
+        font-size: 30px;
+        font-weight: 600;
+        margin-bottom: 0px !important;
+    }
+
+    .modal-makerContainer {
+        display: inline-block;
+        /* margin-right: 10px; */
+
+        p {
+            font-weight: 500;
+            font-size: 17px;
+            margin-bottom: 0px;
+        }
+        
+    }
+    
+    .modal-cultureContainer {
+        display: inline-block;
+
+        p {
+            font-weight: 200;
+            font-size: 17px;
+            margin-bottom: 0px;
+        }
+    }
+
+    .modal-dateText {
+        font-weight: 300;
+    }
 }
 
 .modalImg {

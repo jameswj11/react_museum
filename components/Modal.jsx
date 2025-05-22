@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import notFound from "../src/not-found.png";
 
 const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
@@ -18,6 +18,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   }
 
   const setUrl = () => {
+    console.log()
     if (content.primaryimageurl) {
       var url = content.primaryimageurl
     } else {
@@ -25,9 +26,9 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     }
 
     imageSrc = url;
-
     modalImageRef.current.src = imageSrc;
   };
+
   if (Object.keys(content).length) {
     data = {
       title: content.title,
@@ -122,9 +123,15 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   };
 
   useEffect(() => {
-    setUrl()
     cleanUpCss(isOpen);
     modalRef.current.scrollTop = 0;
+    modalImageRef.current.addEventListener('load', function(e) {
+      e.target.style.display = 'initial'
+    });
+
+    if (isOpen == false) {
+      modalImageRef.current.style.display = 'none';
+    }
   }, [isOpen]);
 
   return (
@@ -155,9 +162,12 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
             </div>
             <div className="modalImgContainer col p-5">
               <img
+                id="modal-mainImage"
                 ref={modalImageRef}
                 className="modalImg"
-                src={imageSrc}
+                src={
+                  content.primaryimageurl ? content.primaryimageurl : notFound
+                }
                 alt={content.title}
               />
               <div className="additionalImageContainer">{additionalImages}</div>
