@@ -25,6 +25,7 @@ const Main = () => {
 
   const searchPaintings = async (searchValue, currentPage, searchByFilter) => {
     const url = "https://api.harvardartmuseums.org/object?";
+
     const centuryAgg = JSON.stringify({
       by_century: {
         terms: { field: "century" }
@@ -38,12 +39,8 @@ const Main = () => {
       sortorder: "desc",
       hasimage: 1,
       size: numResultsPerPage,
-      page: currentPage,
+      page: currentPage
     };
-
-    const fullRequest =
-      url +
-      new URLSearchParams(params).toString()
 
     if (searchByFilter.length > 0) {
       for (let i = 0; i < searchByFilter.length; i++) {
@@ -51,6 +48,10 @@ const Main = () => {
         params[key] = searchByFilter[i][key];
       }
     }
+
+    const fullRequest =
+      url +
+      new URLSearchParams(params).toString()
 
     const response = await fetch(fullRequest);
     const responseJson = await response.json();
