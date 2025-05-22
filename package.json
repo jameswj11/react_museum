@@ -1,11 +1,14 @@
 {
   "name": "react_museum",
   "version": "1.0.0",
+  "homepage": "https://jameswj11.github.io/react_museum",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
-    "start": "webpack serve --mode development"
+    "start": "webpack serve --mode development",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +26,7 @@
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
     "react-bootstrap": "^2.10.10",
