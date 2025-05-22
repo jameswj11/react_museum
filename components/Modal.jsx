@@ -138,6 +138,20 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       >
         <div className="modalData container" ref={modalRef}>
           <div className="row">
+            <div
+              className="modalImgContainer col p-5"
+            >
+              <ImageGallery
+                ref={imageGalleryContainer}
+                items={additionalImages}
+                showNav={false}
+                showPlayButton={false}
+                onErrorImageURL={notFound}
+                onImageLoad={(e) => {
+                  imageLoaded(e);
+                }}
+              />
+            </div>
             <div className="modalContentContainer col p-5">
               {modalObj}
               <button
@@ -152,20 +166,6 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
                   ? "Remove From Favorites"
                   : "Save To Favorites"}
               </button>
-            </div>
-            <div
-              className="modalImgContainer col p-5"
-            >
-              <ImageGallery
-                ref={imageGalleryContainer}
-                items={additionalImages}
-                showNav={false}
-                showPlayButton={false}
-                onErrorImageURL={notFound}
-                onImageLoad={(e) => {
-                  imageLoaded(e);
-                }}
-              />
             </div>
             <button className="closeModalButton">X</button>
           </div>
