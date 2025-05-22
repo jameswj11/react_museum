@@ -50,21 +50,23 @@ p {
 
 .additionalImageContainer {
     text-align: justify;
+    margin-top: 25px;
+    
+    .additionalImageThumbnail {
+        height: 79px;
+        width: 79px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: inline-block;
+        overflow-x: scroll;
+    }
+    
+    .additionalImageThumbnail:hover {
+        cursor: pointer;
+    }
 }
 
-.additionalImageThumbnail {
-    height: 79px;
-    width: 79px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: inline-block;
-    overflow-x: scroll;
-}
-
-.additionalImageThumbnail:hover {
-    cursor: pointer;
-}
 
 .modalBG-open {
     display: block;
