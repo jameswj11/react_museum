@@ -1,33 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import notFound from "../src/not-found.png";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   let modalObj = [];
   let data = {};
   let additionalImages = [];
 
-  const modalImageRef = useRef(null);
   const modalRef = useRef(null);
-
-  let imageSrc;
+  const imageGalleryContainer = useRef(null);
 
   if (isOpen) {
     document.body.classList.add("body-modal-open");
   } else {
     document.body.classList.remove("body-modal-open");
   }
-
-  const setUrl = () => {
-    console.log()
-    if (content.primaryimageurl) {
-      var url = content.primaryimageurl
-    } else {
-      var url = notFound;
-    }
-
-    imageSrc = url;
-    modalImageRef.current.src = imageSrc;
-  };
 
   if (Object.keys(content).length) {
     data = {
@@ -40,7 +28,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
       creditline: content.creditline,
       provenance: content.provenance,
       copyright: content.copyright,
-      link: content.url
+      link: content.url,
     };
 
     if (content.peoplecount > 0) {
@@ -58,7 +46,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
             <p className={"modal-" + key + "Text"}>{data[key]}</p>
           </div>
         );
-      } else if (key == 'link') {
+      } else if (key == "link") {
         modalObj.push(
           <div key={key} className={"modal-" + key + "Container"}>
             <p className={"modal-" + key + "Text"}>
@@ -66,7 +54,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
               <a href={data[key]}>{data[key]}</a>
             </p>
           </div>
-        )
+        );
       } else {
         modalObj.push(
           <div key={key} className={"modal-" + key + "Container"}>
@@ -81,21 +69,12 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   }
 
   // add additional images if available
-  if (content.images && content.images.length > 1) {
+  if (content.images && content.images.length > 0) {
     content.images.forEach((image, index) => {
-      additionalImages.push(
-        <div
-          className="additionalImageThumbnail"
-          key={index}
-          style={{
-            backgroundImage: "url(" + image.baseimageurl + "?width=100" + ")",
-          }}
-          onClick={(event) => {
-            event.stopPropagation();
-            modalImageRef.current.src = image.baseimageurl
-          }}
-        ></div>
-      );
+      additionalImages.push({
+        original: image.baseimageurl,
+        thumbnail: image.baseimageurl + "?width=80",
+      });
     });
   }
 
@@ -135,14 +114,23 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   useEffect(() => {
     cleanUpCss(isOpen);
     modalRef.current.scrollTop = 0;
-    modalImageRef.current.addEventListener('load', function(e) {
-      e.target.style.display = 'initial'
-    });
-
     if (isOpen == false) {
-      modalImageRef.current.style.display = 'none';
+      if (imageGalleryContainer.current.imageGallery.current) {
+        imageGalleryContainer.current.imageGallery.current.style.display =
+          "none";
+      }
+    } else {
+      if (imageGalleryContainer.current.imageGallery.current) {
+        imageGalleryContainer.current.imageGallery.current.style.display =
+          "initial";
+      }
     }
   }, [isOpen]);
+
+  const imageLoaded = (e) => {
+    imageGalleryContainer.current.imageGallery.current.style.display =
+      "initial";
+  };
 
   return (
     <div>
@@ -153,8 +141,20 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           setIsOpen(false);
         }}
       >
-        <div className="modalData container" ref={modalRef} >
+        <div className="modalData container" ref={modalRef}>
           <div className="row">
+            <div className="modalImgContainer col p-5">
+              <ImageGallery
+                ref={imageGalleryContainer}
+                items={additionalImages}
+                showNav={false}
+                showPlayButton={false}
+                onErrorImageURL={notFound}
+                onImageLoad={(e) => {
+                  imageLoaded(e);
+                }}
+              />
+            </div>
             <div className="modalContentContainer col p-5">
               {modalObj}
               <button
@@ -169,18 +169,6 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
                   ? "Remove From Favorites"
                   : "Save To Favorites"}
               </button>
-            </div>
-            <div className="modalImgContainer col p-5">
-              <img
-                id="modal-mainImage"
-                ref={modalImageRef}
-                className="modalImg"
-                src={
-                  content.primaryimageurl ? content.primaryimageurl : notFound
-                }
-                alt={content.title}
-              />
-              <div className="additionalImageContainer">{additionalImages}</div>
             </div>
             <button className="closeModalButton">X</button>
           </div>

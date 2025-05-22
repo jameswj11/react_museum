@@ -33,6 +33,14 @@ p {
     cursor: pointer;
 }
 
+.image-gallery-thumbnails-wrapper {
+    max-width: 564px;
+}
+
+.image-gallery-thumbnail.active, .image-gallery-thumbnail:focus, .image-gallery-thumbnail:hover {
+    border: 4px solid black !important
+}
+
 @media only screen and (max-width: 992px) {
     .filterSelect {
         margin-top: 8px !important;
