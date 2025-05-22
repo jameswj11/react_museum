@@ -24,11 +24,6 @@ const Paintings = ({
       }
   }
 
-  const handleError = (image => {
-    image.src = notFound;
-    image.style.opacity = 0.4
-  })
-
   if (artworks.length == 0) {
     artObjects = <p>No results to display</p>
   } else {
