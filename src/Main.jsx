@@ -19,22 +19,31 @@ const Main = () => {
   const [content, setContent] = useState({});
   const [selected, setSelected] = useState(false);
   const [searchByFilter, setSearchByFilter] = useState([]);
-  const [numResults, setNumResults] = useState(0)
+  const [numResults, setNumResults] = useState(0);
 
   const numResultsPerPage = 48;
 
   const searchPaintings = async (searchValue, currentPage, searchByFilter) => {
     const url = "https://api.harvardartmuseums.org/object?";
+    const centuryAgg = JSON.stringify({
+      by_century: {
+        terms: { field: "century" }
+      },
+    });
 
     const params = {
       apikey: process.env.API_KEY,
-      q: searchValue,
-      hasimage: 1,
+      keyword: searchValue,
       sort: "totalpageviews",
       sortorder: "desc",
+      hasimage: 1,
       size: numResultsPerPage,
       page: currentPage,
     };
+
+    const fullRequest =
+      url +
+      new URLSearchParams(params).toString()
 
     if (searchByFilter.length > 0) {
       for (let i = 0; i < searchByFilter.length; i++) {
@@ -43,7 +52,7 @@ const Main = () => {
       }
     }
 
-    const response = await fetch(url + new URLSearchParams(params).toString());
+    const response = await fetch(fullRequest);
     const responseJson = await response.json();
 
     if (responseJson.records) {
@@ -113,14 +122,12 @@ const Main = () => {
         return 0;
       }
     });
-    
-    
+
     setPaintings(sortedResults);
     setNumPages(response.info.pages);
-    setNumResults(response.info.totalrecords)
-    
-    
-    console.log('TOTAL RECORDS:', response.info.totalrecords)
+    setNumResults(response.info.totalrecords);
+
+    console.log("TOTAL RECORDS:", response.info.totalrecords);
   };
 
   const showFavorites = (event) => {
@@ -128,20 +135,20 @@ const Main = () => {
     const faves = document.getElementById("favoriteGrid");
     const results = document.getElementById("resultsGrid");
     const pageNav = document.getElementById("pageNav");
-    const viewText = document.getElementById("viewFavoritesText")
+    const viewText = document.getElementById("viewFavoritesText");
 
     if (faves.style.display == "none") {
       faves.style.display = "";
       results.style.display = "none";
       pageNav.style.display = "none";
-      viewText.innerHTML = "Show Search Results"
+      viewText.innerHTML = "Show Search Results";
       event.target.innerHTML = "Show Search";
     } else {
       faves.style.display = "none";
       results.style.display = "";
       pageNav.style.display = "";
       event.target.innerHTML = "Show Favorites";
-      viewText.innerHTML = "Show Favorites"
+      viewText.innerHTML = "Show Favorites";
     }
   };
 
@@ -151,20 +158,26 @@ const Main = () => {
   }, [searchValue, currentPage, searchByFilter]);
 
   useEffect(() => {
-    setCurrentPage(1)
-  }, [searchValue, searchByFilter])
+    setCurrentPage(1);
+  }, [searchValue, searchByFilter]);
 
   const setSelectOption = (output) => {
     let newSearchOptions = [...searchByFilter];
 
-    if (newSearchOptions.some(filter => Object.keys(filter).includes(Object.keys(output)[0]))) {
+    if (
+      newSearchOptions.some((filter) =>
+        Object.keys(filter).includes(Object.keys(output)[0])
+      )
+    ) {
       newSearchOptions.forEach((option) => {
         if ([Object.keys(option)[0]] == Object.keys(output)[0]) {
           option[Object.keys(option)[0]] = output[Object.keys(output)[0]];
         }
-      })
+      });
     } else {
-      newSearchOptions.push({[Object.keys(output)[0]]: output[Object.keys(output)[0]]})
+      newSearchOptions.push({
+        [Object.keys(output)[0]]: output[Object.keys(output)[0]],
+      });
     }
 
     setSearchByFilter(newSearchOptions);
@@ -200,7 +213,9 @@ const Main = () => {
         />
         <div className="row favoritesContainer">
           <div className="col">
-            <h4 className="" id="viewFavoritesText">View Your Favorites</h4>
+            <h4 className="" id="viewFavoritesText">
+              View Your Favorites
+            </h4>
             <button
               type="button"
               className="btn btn-outline-secondary view-favorites-button"

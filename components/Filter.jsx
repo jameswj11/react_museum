@@ -14,12 +14,14 @@ const ReactFilter = ({
   let cultures = [];
   let noFilter = true;
 
+  // console.log('centuries:', centuries, 'cultures:', cultures, 'classifications:', classifications)
+  // console.log('search by filter:', searchByFilter)
 
   searchByFilter.forEach(filter => {
-    if (filter[Object.keys(filter)[0]] == '') {
-      noFilter = true;
+    if (searchByFilter.some(filter => Object.keys(filter)[0] != '')) {
+      noFilter = false
     } else {
-      noFilter = false;
+      noFilter = true;
     }
   })
 
