@@ -7,7 +7,8 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
   let additionalImages = [];
 
   const modalImageRef = useRef(null);
-  // const [imageSrc, setImageSrc] = useState(null);
+  const modalRef = useRef(null);
+
   let imageSrc;
 
   if (isOpen) {
@@ -126,6 +127,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
     }
     setUrl()
     cleanUpCss(isOpen);
+    modalRef.current.scrollTop = 0;
   }, [isOpen]);
 
   return (
@@ -137,7 +139,7 @@ const Modal = ({ isOpen, setIsOpen, content, favorites, setFavorites }) => {
           setIsOpen(false);
         }}
       >
-        <div className="modalData container">
+        <div className="modalData container" ref={modalRef} >
           <div className="row">
             <div className="modalContentContainer col p-5">
               {modalObj}
