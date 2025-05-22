@@ -150,6 +150,10 @@ const Main = () => {
     searchFields([]);
   }, [searchValue, currentPage, searchByFilter]);
 
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchValue, searchByFilter])
+
   const setSelectOption = (output) => {
     let newSearchOptions = [...searchByFilter];
 

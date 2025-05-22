@@ -27,8 +27,7 @@ const ReactFilter = ({
     centuries = [];
     classifications = [];
     cultures = [];
-    
-    console.log('set new filters')
+
     if (startFilters.century) {
       Object.keys(startFilters.century).forEach((key) => {
         centuries.push({ value: key, label: key });
@@ -140,10 +139,6 @@ const ReactFilter = ({
       filterText[0].style.textDecoration = "none";
     })
   }
-
-  console.log('centuries:', centuries)
-  console.log('cultures:', cultures)
-  console.log('classifications:', classifications)
 
   return (
     <div className="filterByContainer">
